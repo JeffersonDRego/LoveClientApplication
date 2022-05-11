@@ -62,6 +62,7 @@ function AuthProvider({children}){
     }
     //LOGOUT
     async function Logout(){
+
         await AsyncStorage.clear().then(setUser(null))
         console.log(user)
     }
@@ -92,6 +93,8 @@ function AuthProvider({children}){
             setLoading(false)
         })
     }
+
+
     //SALVANDO NO ASYNCSTORAGE
     async function storageUser(data){
         await AsyncStorage.setItem('Auth_user', JSON.stringify(data))
