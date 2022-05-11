@@ -6,7 +6,7 @@ import { AuthContext } from "../../contexts/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { format } from "date-fns";
 
-import {Container, ButtonAct, TextInputs, TextsLogin} from '../../styles/styles';
+import {ContainerNewClient, ButtonAct, TextInputs, TextsLogin} from '../../styles/styles';
 // import MaskInput, { Masks } from 'react-native-mask-input';
 
 export default function NewClientScreen() {
@@ -78,7 +78,7 @@ export default function NewClientScreen() {
   }
   
   return (
-    <Container>
+    <ContainerNewClient>
       <TextsLogin style={{fontWeight:'bold', fontSize:22, marginBottom:50}}>CADASTRAR NOVO CLIENTE:</TextsLogin>
       {/* <Text>{user && user.uid + "  " + user.name +"  " + user.email}</Text> */}
       {/* <Text>TOKEN DE USUÁRIO: {user.uid}</Text> */}
@@ -109,7 +109,7 @@ export default function NewClientScreen() {
       <ButtonAct style={{marginTop:20, backgroundColor:'#aaa1aa'}} onPress={Logout}>
         <Text style={{color:'#FFF', fontSize:19, fontWeight:'bold'}}>Sair</Text>
       </ButtonAct>
-    </Container>
+    </ContainerNewClient>
   );
 }
 

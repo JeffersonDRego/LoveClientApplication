@@ -49,9 +49,20 @@ font-size: 18px;
 `
 
 //HOME
+export const ContainerHeader = styled.View`
+/* flex:0; */
+flex-direction:column;
+justify-content: flex-end;
+align-items: flex-end;
+/* background-color: blueviolet; */
+width: 100%;
+height: 70px;
+padding: 10px;
+margin-top: 35px;
+`
 export const Container = styled.View`
 flex:1;
-justify-content: center;
+/* justify-content: center; */
 align-items: center;
 background-color: #731212;
 `
@@ -73,9 +84,16 @@ justify-Content:center;
 align-Items:center;
 /* elevation:2; */
 `
-
+//NEW CLIENT
+export const ContainerNewClient = styled.View`
+flex:1;
+justify-content: center;
+align-items: center;
+background-color: #731212;
+`
 
 //CONFIGS
+
 export const ContainerConfigs = styled.View`
 flex:1;
 flex-direction:column;
@@ -88,18 +106,19 @@ export const ListaClientes = styled.FlatList.attrs({
     marginHorizontal:15
 })`
 padding-top: 15px;
-background-color:#A61F1F;
+background-color:#731212;
 border-radius: 5px;
+margin-bottom: 10px;
 /* border-width: 1px;
 border-color:#F2EADF; */
-height: 50%;
-width: 96%;
+/* height: 50%; */
+/* width: 96%; */
 
 `
 //COMPONENT LIST
 export const ContainerList = styled.View`
 /* background-color: #FFF; */
-padding: 5px;
+padding: 3px;
 
 
 `
@@ -110,6 +129,7 @@ justify-content: space-between;
 align-items: center;
 border-radius: 3px;
 padding: 9px;
+margin-bottom: 10px;
 `
 export const TextName = styled.Text`
 color: #000;

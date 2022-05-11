@@ -1,12 +1,13 @@
 import React, {useState, useContext, useEffect} from "react";
-import { Text, StyleSheet, Keyboard, Alert } from "react-native";
+import { Text, StyleSheet, Keyboard, Alert, SafeAreaView, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import firebase from "../../services/firebaseConnection";
 import { AuthContext } from "../../contexts/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { format } from "date-fns";
+import IonIcons from "react-native-vector-icons/Ionicons";
 
-import {Container, ButtonAct, TextInputs, TextsLogin} from '../../styles/styles';
+import {ContainerHeader, Container, ButtonAct, TextInputs, TextsLogin} from '../../styles/styles';
 // import MaskInput, { Masks } from 'react-native-mask-input';
 
 export default function Home({data}) {
@@ -22,23 +23,19 @@ export default function Home({data}) {
    
   },[])
 
-  function handleSubmit(){
-    Keyboard.dismiss();
-    if (isNaN(phoneClient) || nameClient === null){
-      alert('Preencha corretamente')
-      return;
-    }
+  function handleLogout(){
+
     Alert.alert(
-      'Confira os dados',
-      `Nome: ${nameClient}  Telefone: ${phoneClient}`,
+      'DESEJA SAIR DA SUA CONTA?',
+      `Será necessário novo Login para acessar o App novamente`,
       [
         {
-          text:'Cancelar',
+          text:'VOLTAR AO APP',
           style: 'cancel'
         },
         {
-          text:'Confirmar',
-          onPress: ()=> handleSubmitClient()
+          text:'SAIR',
+          onPress: ()=> Logout()
         }
       ]
     )
@@ -62,16 +59,26 @@ export default function Home({data}) {
   }
   
   return (
+    <SafeAreaView style={{flex:1, backgroundColor:'#731212'}}>
+
+      <ContainerHeader>
+        <TouchableOpacity onPress={handleLogout}>
+          <IonIcons style={{marginRight:10}} name={'exit'} size={40} color={'white'}/>
+          <Text style={{marginRight:18, color:'#FFF'}}>SAIR</Text>
+
+        </TouchableOpacity>
+      </ContainerHeader>
     <Container>
       <TextsLogin style={{fontWeight:'bold', fontSize:22, marginBottom:50}}>Olá {user.name}</TextsLogin>
       {/* <Text>{user && user.uid + "  " + user.name +"  " + user.email + user.clients}</Text> */}
       {/* <Text>TOKEN DE USUÁRIO: {user.uid}</Text> */}
       <TextsLogin style={{fontWeight:'bold', fontSize:20}}>Você possui {user.clients} Clientes cadastrados.</TextsLogin>
       
-      <ButtonAct style={{marginTop:20, backgroundColor:'#aaa1aa'}} onPress={Logout}>
+      {/* <ButtonAct style={{marginTop:20, backgroundColor:'#aaa1aa'}} onPress={Logout}>
         <Text style={{color:'#FFF', fontSize:19, fontWeight:'bold'}}>Sair</Text>
-      </ButtonAct>
+      </ButtonAct> */}
     </Container>
+    </SafeAreaView>
   );
 }
 

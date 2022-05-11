@@ -5,6 +5,7 @@ import Configs from "../pages/ConfigScreen";
 import NewClientScreen from "../pages/NewClientScreen";
 
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +24,8 @@ export default function AppRoute(){
                 fontWeight:"bold"
             },
             tabBarItemStyle:{
-                borderRadius:5
+                borderRadius:5,
+                margin: 5,
             },
             tabBarStyle:{
                 backgroundColor:'#A61F1F',
