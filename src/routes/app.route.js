@@ -17,19 +17,23 @@ export default function AppRoute(){
             headerShown: false,
             tabBarHideOnKeyboard:true,
             // tabBarShowLabel: false,
-            tabBarActiveTintColor:'#FFF',
-            tabBarInactiveTintColor:'#F28E85',
-            tabBarActiveBackgroundColor:'#F28E85',
+            tabBarActiveTintColor:'#0D0D0D',
+            tabBarInactiveTintColor:'#A6A6A6',
+            tabBarActiveBackgroundColor:'#BFB47A',
+            tabBarInactiveBackgroundColor:'#0D0D0D',
+
             tabBarLabelStyle:{
                 fontWeight:"bold"
             },
             tabBarItemStyle:{
-                borderRadius:5,
-                margin: 5,
+                borderRadius:4,
+                margin: 3,
+                padding: 2,
+                // borderColor:'#404040',
             },
             tabBarStyle:{
-                backgroundColor:'#A61F1F',
-                borderTopWidth:2,
+                backgroundColor:'#262626',
+                // borderTopWidth:2,
                 // borderBottomWidth:5,
                 borderTopColor:'black',
                 // borderBottomColor:'#A61F1F',

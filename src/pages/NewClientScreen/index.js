@@ -1,35 +1,34 @@
-import React, {useState, useContext, useEffect} from "react";
-import { Text, StyleSheet, Keyboard, Alert } from "react-native";
+import React, {useState, useContext} from "react";
+import { Text, StyleSheet, Keyboard, ActivityIndicator,Alert, Image, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import firebase from "../../services/firebaseConnection";
 import { AuthContext } from "../../contexts/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { format } from "date-fns";
 
-import {ContainerNewClient, ButtonAct, TextInputs, TextsLogin} from '../../styles/styles';
+import {ContainerNewClient, ButtonAct, TextInputs, TextsLogin, ContainerHeaderNew, SafeArea} from '../../styles/styles';
 // import MaskInput, { Masks } from 'react-native-mask-input';
 
 export default function NewClientScreen() {
   const navigation = useNavigation();
   
-  const {user, Logout, storageUser, loadStoragedUser} = useContext(AuthContext);
+  const {user, storageUser, loadStoragedUser} = useContext(AuthContext);
 
   const [nameClient, setNameClient] = useState(null);
   const [phoneClient, setPhoneClient] = useState(null);
+  const [loading, setLoading] = useState(false);
+  // const [confirmPhone, setConfirmPhone] = useState(null);
   const [purchases, setPurchases] = useState(0);
   
-  useEffect(()=>{
-   
-  },[])
 
   function handleSubmit(){
     Keyboard.dismiss();
-    if (isNaN(phoneClient) || nameClient === null){
-      alert('Preencha corretamente')
+    if (isNaN(phoneClient) || nameClient === null ){
+      alert(`Preencha corretamente... Verifique o telefone e certifique-se que preencheu o campo de Nome`)
       return;
     }
     Alert.alert(
-      'Confira os dados',
+      'Confirme o TELEFONE',
       `Nome: ${nameClient}  Telefone: ${phoneClient}`,
       [
         {
@@ -44,7 +43,7 @@ export default function NewClientScreen() {
     )
   }
   async function handleSubmitClient(){
-
+    setLoading(true);
     let uid = user.uid;
     let key = await firebase.database().ref('clients').child(uid).push().key;
     await firebase.database().ref('clients').child(uid).child(key).set({
@@ -66,50 +65,93 @@ export default function NewClientScreen() {
           email: user.email,
           clients: user.clients + 1,
       }
-      storageUser(data);
-      loadStoragedUser();
-      setNameClient('');
-      setPhoneClient('');
-      Keyboard.dismiss();
-      navigation.navigate('Configs');
-      alert('CLIENTE CADASTRADO');
       
+      storageUser(data);
     })
+    loadStoragedUser();
+    setNameClient('');
+    setPhoneClient('');
+    Keyboard.dismiss();
+    navigation.navigate('Configs');
+    setLoading(false);
+    alert('CLIENTE CADASTRADO COM SUCESSO');
   }
   
   return (
-    <ContainerNewClient>
-      <TextsLogin style={{fontWeight:'bold', fontSize:22, marginBottom:50}}>CADASTRAR NOVO CLIENTE:</TextsLogin>
-      {/* <Text>{user && user.uid + "  " + user.name +"  " + user.email}</Text> */}
-      {/* <Text>TOKEN DE USUÁRIO: {user.uid}</Text> */}
-      <TextsLogin style={{fontWeight:'bold', fontSize:20, marginLeft:'-43%'}}>Cadastrar Cliente:</TextsLogin>
-      <TextInputs
-      onChangeText={(text)=>{setNameClient(text)}}
-      value={nameClient}
-      placeholder="NOME CLIENTE"
-      />
-      <TextInputs
-      onChangeText={(text)=>{setPhoneClient(text)}}
-      value={phoneClient}
-      placeholder="PHONE CLIENTE"
-      keyboardType="numeric"
-      />
-
-      {/* <MaskInput
-      style={styles.InputPhone}
-      value={phoneClient}
-      onChangeText={(numeric)=>{setPhoneClient(numeric)}}
-      keyboardType="numeric"
-      mask={Masks.BRL_PHONE}
+    <SafeArea>
+      <ContainerHeaderNew >
+        <Image source={require('../../Img/LogoPNG.png')} 
+              style={{width:'60%', height:100, resizeMode:'contain', marginLeft:'10%'}}/>
+        
+        <Image source={require('../../Img/AddClient.png')} 
+              style={{width:'20%', height:'50%', resizeMode:'contain', marginRight:'5%', marginBottom:'4%',}}/>
+      </ContainerHeaderNew>
       
-    /> */}
-      <ButtonAct style={{marginTop:20, backgroundColor:'#D93232'}} onPress={handleSubmit} >
-        <Text style={{color:'#FFF', fontSize:19, fontWeight:'bold'}}>Cadastrar</Text>
-      </ButtonAct>
-      <ButtonAct style={{marginTop:20, backgroundColor:'#aaa1aa'}} onPress={Logout}>
-        <Text style={{color:'#FFF', fontSize:19, fontWeight:'bold'}}>Sair</Text>
-      </ButtonAct>
-    </ContainerNewClient>
+      <View style={{width:'100%', height:7, backgroundColor:'#BFB47A'}}>
+      </View>
+      <View style={{width:'100%', height:2, backgroundColor:'#FFF'}}>
+      </View>
+      
+      <ContainerNewClient>
+
+        {/* <TextsLogin style={{fontWeight:'bold', fontSize:22, marginBottom:30}}>CADASTRAR NOVO CLIENTE:</TextsLogin> */}
+        {/* <Text>{user && user.uid + "  " + user.name +"  " + user.email}</Text> */}
+        {/* <Text>TOKEN DE USUÁRIO: {user.uid}</Text> */}
+        <TextsLogin style={{ fontSize:17, textAlign:'center', marginBottom:25, margin:'10%'}}>Preencha o Nome e o Telefone do Cliente e clique em 'CADASTRAR'</TextsLogin>
+        
+        <View style={{width:'80%', marginBottom:-5}}>
+          <TextsLogin>Nome do Cliente:</TextsLogin>
+        </View>
+        <TextInputs
+        onChangeText={(text)=>{setNameClient(text)}}
+        value={nameClient}
+        placeholder="Insira o Nome do Cliente"
+        />
+
+        <View style={{width:'80%', marginBottom:-5}}>
+          <TextsLogin>Telefone do Cliente:</TextsLogin>
+        </View>
+        <TextInputs
+        onChangeText={(text)=>{setPhoneClient(text)}}
+        value={phoneClient}
+        placeholder="Insira o Telefone do Cliente"
+        keyboardType="numeric"
+        />
+
+        {/* <View style={{width:'80%', marginBottom:-5}}>
+          <TextsLogin>Confirmar Telefone:</TextsLogin>
+        </View>
+        <TextInputs
+        onChangeText={(text)=>{setConfirmPhone(text)}}
+        value={confirmPhone}
+        placeholder="Confirme o Telefone do Cliente"
+        keyboardType="numeric"
+        /> */}
+
+        {/* <MaskInput
+        style={styles.InputPhone}
+        value={phoneClient}
+        onChangeText={(numeric)=>{setPhoneClient(numeric)}}
+        keyboardType="numeric"
+        mask={Masks.BRL_PHONE}
+        
+        /> */}
+      
+        <ButtonAct style={{marginTop:20, backgroundColor:'#D93232'}} onPress={handleSubmit} >
+        {
+        loading?(
+          <ActivityIndicator size={20} color={"#FFF"}/>
+        ) : (
+          <Text style={{color:'#FFF', fontSize:19, fontWeight:'bold'}}>Cadastrar</Text>
+        )
+      }
+        </ButtonAct>
+  
+
+
+
+      </ContainerNewClient>
+    </SafeArea>
   );
 }
 

@@ -1,9 +1,10 @@
 import React, {useState, useRef, useContext} from "react";
-import { ActivityIndicator, TouchableOpacity, Animated, StyleSheet, View, Button } from "react-native";
-import { ContainerLogin, TextInputsLogin, TextInputsCadastro, ButtonActLogin, ButtonChange, TextsLogin, TextsTitleLogin } from "../../styles/styles";
+import { ActivityIndicator, TouchableOpacity, View, Image } from "react-native";
+import { ContainerLogin, TextInputsLogin, TextInputsCadastro, ButtonActLogin, TextsLogin,
+        } from "../../styles/styles";
 
 import { AuthContext } from "../../contexts/auth";
-
+import logo from "../../Img/Logo.svg";
 
 export default function Login() {
 
@@ -26,60 +27,34 @@ export default function Login() {
         signUp(email, password, name)
     }
   };
-  //ANIMATED VIEW
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const fadeIn = () => {
-    // Will change fadeAnim value
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 2500,
-      useNativeDriver: true // Add This line
-    }).start();
-  };
 
   //RENDERIZA OU NÃO TEXTINPUT DE NOME A PARTIR DE TYPE
   function TextInputName(){
     if(type === 'Login'){
       return
     }else{
-      fadeIn();
       return (
   
-          <Animated.View
-            style={[
-              styles.fadingContainer,
-              {
-                // Bind opacity to animated value
-                opacity: fadeAnim
-              }
-            ]}
-          >
-            <TextInputsCadastro
-            onChangeText={text=>setName(text)}
-            value={name}
-            placeholder="Nome"
-            // keyboardType="numeric"
-            />
-          </Animated.View>
+            <View style={{width:'80%', marginBottom:5}}>
+              <TextsLogin>Nome:</TextsLogin>
+              <TextInputsCadastro
+              onChangeText={text=>setName(text)}
+              value={name}
+              placeholder="Nome"
+              // keyboardType="numeric"
+              />
+            </View>
 
 
       )}}
-//   );
-// }
-    //   return(
-    //   <TextInputsLogin
-    //   onChangeText={text=>setName(text)}
-    //   value={name}
-    //   placeholder="Nome"
-    //   // keyboardType="numeric"
-    //   />
-    // )
-    // }
-  // }
+
  return (
    <ContainerLogin>
-    <TextsTitleLogin>{type} Loveclient</TextsTitleLogin>
     
+    <Image source={require('../../Img/LogoPNG.png')} 
+            style={{width:'70%', height:100, resizeMode:'contain', marginBottom:'13%'}}/>
+
+    {/* <TextsTitleLogin>{type} Loveclient</TextsTitleLogin> */}
     {TextInputName()}
     <View style={{width:'80%', marginBottom:-5}}>
       <TextsLogin>E-mail:</TextsLogin>
@@ -105,7 +80,7 @@ export default function Login() {
         loading?(
           <ActivityIndicator size={20} color={"#FFF"}/>
         ) : (
-          <TextsLogin style={{color:"#FFF", }}>
+          <TextsLogin style={{color:"#0D0D0D", }}>
             {type === 'Login' ? 'Acessar' : 'Cadastrar'}
           </TextsLogin>
         )
@@ -119,12 +94,3 @@ export default function Login() {
    </ContainerLogin>
   );
 }
-const styles = StyleSheet.create({
-  
-  fadingContainer: {
-    width:'80%',
-    height: 40,
-    borderRadius:5,
-    margin:10,
-  },
-});

@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from "react";
-import { Text, StyleSheet, Keyboard, Alert, SafeAreaView, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, Keyboard, Alert, TouchableOpacity, Image, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import firebase from "../../services/firebaseConnection";
 import { AuthContext } from "../../contexts/auth";
@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { format } from "date-fns";
 import IonIcons from "react-native-vector-icons/Ionicons";
 
-import {ContainerHeader, Container, ButtonAct, TextInputs, TextsLogin} from '../../styles/styles';
+import {ContainerHeaderHome, Container, ButtonAct, TextInputs, TextsLogin, SafeArea} from '../../styles/styles';
 // import MaskInput, { Masks } from 'react-native-mask-input';
 
 export default function Home({data}) {
@@ -19,10 +19,6 @@ export default function Home({data}) {
   const [phoneClient, setPhoneClient] = useState(null);
   const [purchases, setPurchases] = useState(0);
   
-  useEffect(()=>{
-   
-  },[])
-
   function handleLogout(){
 
     Alert.alert(
@@ -57,40 +53,40 @@ export default function Home({data}) {
     navigation.navigate('Configs');
     alert('CLIENTE CADASTRADO');
   }
+
+  function handle(){
+    console.log(user)
+  }
   
   return (
-    <SafeAreaView style={{flex:1, backgroundColor:'#731212'}}>
-
-      <ContainerHeader>
-        <TouchableOpacity onPress={handleLogout}>
-          <IonIcons style={{marginRight:10}} name={'exit'} size={40} color={'white'}/>
-          <Text style={{marginRight:18, color:'#FFF'}}>SAIR</Text>
-
-        </TouchableOpacity>
-      </ContainerHeader>
-    <Container>
-      <TextsLogin style={{fontWeight:'bold', fontSize:22, marginBottom:50}}>Olá {user.name}</TextsLogin>
-      {/* <Text>{user && user.uid + "  " + user.name +"  " + user.email + user.clients}</Text> */}
-      {/* <Text>TOKEN DE USUÁRIO: {user.uid}</Text> */}
-      <TextsLogin style={{fontWeight:'bold', fontSize:20}}>Você possui {user.clients} Clientes cadastrados.</TextsLogin>
+    <SafeArea>
+      <ContainerHeaderHome>
+        <Image source={require('../../Img/LogoPNG.png')} 
+            style={{width:'60%', height:100, resizeMode:'contain', marginBottom:'-10%', marginLeft:'2%'}}/>
+        
+        <View style={{marginTop:20}}>
+          <TouchableOpacity onPress={handleLogout}>
+            <IonIcons style={{marginRight:10, marginBottom:-5}} name={'exit'} size={38} color={'white'}/>
+            <Text style={{marginRight:18, marginBottom:-20,color:'#FFF'}}>SAIR</Text>
       
-      {/* <ButtonAct style={{marginTop:20, backgroundColor:'#aaa1aa'}} onPress={Logout}>
-        <Text style={{color:'#FFF', fontSize:19, fontWeight:'bold'}}>Sair</Text>
-      </ButtonAct> */}
-    </Container>
-    </SafeAreaView>
+          </TouchableOpacity>
+        </View>
+      </ContainerHeaderHome>
+
+      <View style={{width:'100%', height:7, backgroundColor:'#BFB47A'}}>
+      </View>
+      <View style={{width:'100%', height:2, backgroundColor:'#FFF'}}>
+      </View>
+      <ButtonAct onPress={handle}>
+            
+            <Text style={{marginRight:18, marginBottom:-20,color:'#FFF'}}>SAIR</Text>
+      
+          </ButtonAct>
+      <Container>
+        <TextsLogin style={{fontWeight:'bold', fontSize:22}}>Olá {user.name}</TextsLogin>
+        <TextsLogin style={{fontWeight:'bold', fontSize:20}}>Você possui {user.clients} Clientes cadastrados.</TextsLogin>
+      </Container>
+
+    </SafeArea>
   );
 }
-
-const styles = StyleSheet.create({
-  InputPhone:{
-    width:'80%',
-    height:40,
-    backgroundColor:'#fff',
-    borderRadius:5,
-    padding:5,
-    margin:10,
-    fontSize:17
-  }
-
-})
