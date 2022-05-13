@@ -1,11 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Home from "../pages/HomeScreen";
-import Configs from "../pages/ConfigScreen";
-import NewClientScreen from "../pages/NewClientScreen";
+import ConfigsStack from "./configs.stack";
+import ListStack from "./list.stack";
 
 import IonIcons from 'react-native-vector-icons/Ionicons';
-import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const Tab = createBottomTabNavigator();
 
@@ -54,23 +53,9 @@ export default function AppRoute(){
                 }
             }}
             />
-
             <Tab.Screen
-            name="NewClient"
-            component={NewClientScreen}
-            options={{
-                // headerShown:true, 
-                tabBarLabel: 'NOVO CLIENTE',
-                tabBarShowLabel:true,
-                tabBarIcon:({color, size}) => {
-                    return <IonIcons name="person-add" color={color} size={30}></IonIcons>
-                }
-            }}
-            />
-
-            <Tab.Screen
-            name="Configs"
-            component={Configs}
+            name="ListPageScreen"
+            component={ListStack}
             options={{
                 // headerShown:true, 
                 tabBarLabel: 'LISTA DE CLIENTES',
@@ -80,6 +65,20 @@ export default function AppRoute(){
                 }
             }}
             />
+
+            <Tab.Screen
+            name="ConfigsPageScreen"
+            component={ConfigsStack}
+            options={{
+                // headerShown:true, 
+                tabBarLabel: 'CONFIGURAÇÕES',
+                tabBarShowLabel:true,
+                tabBarIcon:({color, size}) => {
+                    return <IonIcons name="settings-outline" color={color} size={30}></IonIcons>
+                }
+            }}
+            />
+
 
         </Tab.Navigator>
     )

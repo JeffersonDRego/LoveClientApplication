@@ -1,21 +1,28 @@
-import React, {useState, useContext, useEffect} from "react";
-import { Alert, View, ActivityIndicator, Image } from "react-native";
+import React, {useState, useEffect, useContext} from "react";
+import { Text, StyleSheet, Keyboard, ActivityIndicator,Alert, Image, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import firebase from "../../services/firebaseConnection";
 import { AuthContext } from "../../contexts/auth";
-import {SafeArea, ViewList, ContainerHeaderList, ContainerConfigs, ListaClientes, TextsLogin, TextInputs, ButtonAct} from '../../styles/styles';
-import ClientsList from "../../components/ClientsList";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { format } from "date-fns";
 
-export default function Configs() {
-const {user,storageUser,loadStoragedUser} = useContext(AuthContext);
-const [search, setSearch] = useState(null);
-const [listClients, setListClients] = useState([]);
-const uid = user && user.uid;
-
-const [loading, setLoading] = useState(false);
-useEffect(()=> {
+import {SafeArea, ViewList, ContainerHeaderList, ContainerListScreen, ListaClientes, TextsLogin, TextInputs, ButtonAct} from '../../styles/styles';
+// import MaskInput, { Masks } from 'react-native-mask-input';
+import ClientsList from "../../components/ListComponents/ClientsList";
+export default function ListPageScreen() {
+  const navigation = useNavigation();
   
-  // loadListClients()
-  },[]);
+  const {user,storageUser,loadStoragedUser} = useContext(AuthContext);
+  const [search, setSearch] = useState(null);
+  const [listClients, setListClients] = useState([]);
+  const uid = user && user.uid;
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(()=> {
+    loadListClients()
+    },[]);
+    
   //CARREGANDO LISTA DE CLIENTES E SALVANDO DADOS EM data
   async function loadListClients(){
     setLoading(true);
@@ -34,44 +41,46 @@ useEffect(()=> {
     await new Promise(resolve=> setTimeout(resolve, 100))
     setLoading(false)
   };
+
+  //
   
   //DELETANDO CLIENTE
-  function handleDeleteClient(data){
-    Alert.alert(
-      'CERTEZA QUE QUER DELETAR CLIENTE?',
-      `Nome: ${data.nameClient}  Telefone: ${data.phoneClient}`,
-      [
-        {
-          text:'Cancelar',
-          style: 'cancel'
-        },
-        {
-          text:'Confirmar',
-          onPress: ()=> handleDeleteClientSuccess(data)
-        }
-      ]
-    )
-  }
-  async function handleDeleteClientSuccess(data){
-    await firebase.database().ref('clients').child(uid).child(data.key).remove()
-    let usuario = firebase.database().ref('users').child(uid);
-    await usuario.once('value').then((snapshot)=>{
-      let numClients = parseFloat(snapshot.val().clients);
-      numClients -= parseFloat(1)
-      usuario.child('clients').set(numClients);
-    }).then((snapshot)=>{
-      let data = {
-          uid: uid,
-          name: user.name,
-          email: user.email,
-          clients: user.clients - 1,
-      }
-      storageUser(data);
-      alert('CLIENTE EXLUÍDO');
-      loadStoragedUser();
+  // function handleDeleteClient(data){
+  //   Alert.alert(
+  //     'CERTEZA QUE QUER DELETAR CLIENTE?',
+  //     `Nome: ${data.nameClient}  Telefone: ${data.phoneClient}`,
+  //     [
+  //       {
+  //         text:'Cancelar',
+  //         style: 'cancel'
+  //       },
+  //       {
+  //         text:'Confirmar',
+  //         onPress: ()=> handleDeleteClientSuccess(data)
+  //       }
+  //     ]
+  //   )
+  // }
+  // async function handleDeleteClientSuccess(data){
+  //   await firebase.database().ref('clients').child(uid).child(data.key).remove()
+  //   let usuario = firebase.database().ref('users').child(uid);
+  //   await usuario.once('value').then((snapshot)=>{
+  //     let numClients = parseFloat(snapshot.val().clients);
+  //     numClients -= parseFloat(1)
+  //     usuario.child('clients').set(numClients);
+  //   }).then((snapshot)=>{
+  //     let data = {
+  //         uid: uid,
+  //         name: user.name,
+  //         email: user.email,
+  //         clients: user.clients - 1,
+  //     }
+  //     storageUser(data);
+  //     alert('CLIENTE EXLUÍDO');
+  //     loadStoragedUser();
       
-    })
-  }
+  //   })
+  // }
 
   //EDITANDO CLIENTE
   function handleEdit(data){
@@ -122,7 +131,7 @@ useEffect(()=> {
       <View style={{width:'100%', height:2, backgroundColor:'#FFF'}}>
       </View>
 
-      <ContainerConfigs>
+      <ContainerListScreen>
 
         {/* <TextsTitleLogin style={{marginBottom: 10}}>Lista de Clientes:</TextsTitleLogin> */}
         <TextsLogin>PESQUISAR CLIENTE:</TextsLogin>
@@ -131,15 +140,9 @@ useEffect(()=> {
         value={search}
         placeholder="Digite o número ou nome do Cliente" 
         />
-        {/* {
-          loading?(
-            <ActivityIndicator size={20} color={"#FFF"}/>
-          ) : (
-          )
-        } */}
-            <ButtonAct onPress={loadListClients}>
-              <TextsLogin>CARREGAR LISTA</TextsLogin>
-            </ButtonAct>
+        <ButtonAct onPress={()=> navigation.navigate('EditClient')}>
+          <TextsLogin>CARREGAR LISTA</TextsLogin>
+        </ButtonAct>
 
         <ViewList>
           <ListaClientes
@@ -150,14 +153,13 @@ useEffect(()=> {
             loading?(
               <ActivityIndicator size={20} color={"#FFF"} style={{marginBottom:'10%'}}/>
             ) : (
-              <ClientsList data={item} deleteItem={handleDeleteClient} editItem={handleEdit} 
-              editPurchaseToZero={handleEditPurchaseToZero}/>
+              <ClientsList data={item}/>
             )
           )}
           />
         </ViewList>
         
-      </ContainerConfigs>
+      </ContainerListScreen>
     </SafeArea>
   );
 }

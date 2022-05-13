@@ -8,7 +8,7 @@ border-width: 2px;
 border-color: red; */
 `
 
-//LOGIN
+//---------------------------------------------------LOGIN
 
 export const ContainerLogin = styled.View`
 flex:1;
@@ -60,7 +60,7 @@ color: #fff;
 font-size: 18px;
 `
 
-//HOME SCREEN
+//--------------------------------------------------HOME SCREEN
 
 export const ContainerHeaderHome = styled.View`
 /* flex:1; */
@@ -97,26 +97,7 @@ justify-Content:center;
 align-Items:center;
 /* elevation:2; */
 `
-//NEW CLIENT SCREEN
-export const ContainerHeaderNew = styled.View`
-/* flex:1; */
-flex-direction:row;
-justify-content: space-between;
-align-items: flex-end;
-background-color: #0D0D0D;
-width: 100%;
-height: 20%;
-/* padding: 10px; */
-/* margin-top: 35px; */
-`
-export const ContainerNewClient = styled.View`
-flex:1;
-justify-content: flex-start;
-align-items: center;
-background-color: #262626;
-`
-
-//LIST SCREEN
+//-----------------------------------------------------LIST SCREEN
 
 export const ContainerHeaderList = styled.View`
 /* flex:1; */
@@ -127,7 +108,7 @@ background-color: #0D0D0D;
 width: 100%;
 height: 20%;
 `
-export const ContainerConfigs = styled.View`
+export const ContainerListScreen = styled.View`
 /* flex:1; */
 height: 100%;
 /* flex-direction:column; */
@@ -162,7 +143,7 @@ align-Items:center;
 elevation:5;
 `
 
-//COMPONENT LIST
+//-------------------------------------COMPONENT CLIENTLIST
 export const ContainerList = styled.View`
 /* background-color: #FFF; */
 padding: 3px;
@@ -196,12 +177,43 @@ export const ButtonsView = styled.View`
 flex-direction: row;
 padding: 5px;
 justify-content: space-between;
-width: 30%;
+width: 15%;
+/* height: 100%; */
 
 `
 
 export const IconView = styled.View`
-padding: 3px;
-justify-content: space-between;
+/* padding: 3px; */
+/* justify-content: center; */
+align-items: center;
 border-radius: 5px;
+`
+//-------------------------------------COMPONENT EDIT CLIENT
+export const ContainerEditScreen = styled.View`
+/* flex:1; */
+height: 100%;
+/* flex-direction:column; */
+/* justify-content: center; */
+/* align-items: center; */
+background-color: #262626;
+`
+
+
+//-----------------------------------------CONFIGS SCREEN
+export const ContainerHeaderConfigs = styled.View`
+/* flex:1; */
+flex-direction:row;
+justify-content: space-between;
+align-items: flex-end;
+background-color: #0D0D0D;
+width: 100%;
+height: 20%;
+`
+export const ContainerConfigsScreen = styled.View`
+/* flex:1; */
+height: 100%;
+/* flex-direction:column; */
+justify-content: center;
+align-items: center;
+background-color: #262626;
 `
