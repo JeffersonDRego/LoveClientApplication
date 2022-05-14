@@ -73,6 +73,7 @@ export default function Login() {
     onChangeText={text=>setPassword(text)}
     value={password}
     placeholder="Senha"
+    secureTextEntry={true}
     />
 
     <ButtonActLogin onPress={HandleSigInOrSignUp}>

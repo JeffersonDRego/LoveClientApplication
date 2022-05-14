@@ -6,7 +6,8 @@ import { AuthContext } from "../../contexts/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { format } from "date-fns";
 
-import {SafeArea, ViewList, ContainerHeaderList, ContainerListScreen, ListaClientes, TextsLogin, TextInputs, ButtonAct} from '../../styles/styles';
+import {SafeArea, ViewList, ContainerHeaderList, ContainerListScreen, ListaClientes, TextsLogin, TextInputs, 
+  ButtonActListScreen} from '../../styles/styles';
 // import MaskInput, { Masks } from 'react-native-mask-input';
 import ClientsList from "../../components/ListComponents/ClientsList";
 export default function ListPageScreen() {
@@ -41,89 +42,15 @@ export default function ListPageScreen() {
     await new Promise(resolve=> setTimeout(resolve, 100))
     setLoading(false)
   };
-
-  //
-  
-  //DELETANDO CLIENTE
-  // function handleDeleteClient(data){
-  //   Alert.alert(
-  //     'CERTEZA QUE QUER DELETAR CLIENTE?',
-  //     `Nome: ${data.nameClient}  Telefone: ${data.phoneClient}`,
-  //     [
-  //       {
-  //         text:'Cancelar',
-  //         style: 'cancel'
-  //       },
-  //       {
-  //         text:'Confirmar',
-  //         onPress: ()=> handleDeleteClientSuccess(data)
-  //       }
-  //     ]
-  //   )
-  // }
-  // async function handleDeleteClientSuccess(data){
-  //   await firebase.database().ref('clients').child(uid).child(data.key).remove()
-  //   let usuario = firebase.database().ref('users').child(uid);
-  //   await usuario.once('value').then((snapshot)=>{
-  //     let numClients = parseFloat(snapshot.val().clients);
-  //     numClients -= parseFloat(1)
-  //     usuario.child('clients').set(numClients);
-  //   }).then((snapshot)=>{
-  //     let data = {
-  //         uid: uid,
-  //         name: user.name,
-  //         email: user.email,
-  //         clients: user.clients - 1,
-  //     }
-  //     storageUser(data);
-  //     alert('CLIENTE EXLUÍDO');
-  //     loadStoragedUser();
-      
-  //   })
-  // }
-
-  //EDITANDO CLIENTE
-  function handleEdit(data){
-    if(data.purchases == 5){
-      return(
-        Alert.alert(
-          'O Cliente deve ter resgatado seu bônus...',
-          `A nova quantidade de carimbos para ${data.nameClient} será 0.`,
-          [
-            {
-              text:'CANCELAR',
-              style: 'cancel'
-            },
-            {
-              text:'CONFIRMAR',
-              onPress: ()=> handleEditPurchaseToZero(data)
-            }
-          ]
-        )
-      )
-    }else{
-      handleEditPurchaseClient(data)
-    }
-  }
-  async function handleEditPurchaseToZero(data){
-    await firebase.database().ref('clients').child(uid).child(data.key).update({
-      purchases: 0
-    })
-  }
-  async function handleEditPurchaseClient(data){
-    await firebase.database().ref('clients').child(uid).child(data.key).update({
-      purchases: data.purchases + 1
-    })
-  }
   
   return (
-    <SafeArea>
+    <View style={{flex:1,}}>
       <ContainerHeaderList >
         <Image source={require('../../Img/LogoPNG.png')} 
-              style={{width:'60%', height:100, resizeMode:'contain', marginLeft:'10%'}}/>
+        style={{width:'60%', height:100, resizeMode:'contain', marginBottom:'-10%', marginLeft:'2%'}}/>
         
         <Image source={require('../../Img/ListClient.png')} 
-              style={{width:'20%', height:'60%', resizeMode:'contain', marginRight:'5%', marginBottom:'4%',}}/>
+              style={{width:'20%', height:'60%', resizeMode:'contain', marginRight:'5%', marginBottom:'-8%',}}/>
       </ContainerHeaderList>
 
       <View style={{width:'100%', height:7, backgroundColor:'#BFB47A'}}>
@@ -132,19 +59,24 @@ export default function ListPageScreen() {
       </View>
 
       <ContainerListScreen>
+        <View style={{justifyContent:'center', alignItems:'center', marginBottom:'10%', marginTop:'10%', width:'100%'}}>
+          <TextsLogin>PESQUISAR CLIENTE:</TextsLogin>
+          <TextInputs
+          onChangeText={text=>setSearch(text)}
+          value={search}
+          placeholder="Digite o número ou nome do Cliente" 
+          placeholderTextColor="#999999"
+          selectionColor={'#0D0D0D'}
+          />
+          <ButtonActListScreen onPress={()=> navigation.navigate('EditClient')}>
+            <TextsLogin>PESQUISAR</TextsLogin>
+          </ButtonActListScreen>
+        </View>
+        <View style={{ height:80, backgroundColor:'#404040'}}>
 
-        {/* <TextsTitleLogin style={{marginBottom: 10}}>Lista de Clientes:</TextsTitleLogin> */}
-        <TextsLogin>PESQUISAR CLIENTE:</TextsLogin>
-        <TextInputs
-        onChangeText={text=>setSearch(text)}
-        value={search}
-        placeholder="Digite o número ou nome do Cliente" 
-        />
-        <ButtonAct onPress={()=> navigation.navigate('EditClient')}>
-          <TextsLogin>CARREGAR LISTA</TextsLogin>
-        </ButtonAct>
-
+        </View>
         <ViewList>
+        <TextsLogin style={{marginBottom: 10}}>LISTA DE CLIENTES:</TextsLogin>
           <ListaClientes
           // showsVerticalScrollIndicator={false}
           data={listClients}
@@ -153,13 +85,13 @@ export default function ListPageScreen() {
             loading?(
               <ActivityIndicator size={20} color={"#FFF"} style={{marginBottom:'10%'}}/>
             ) : (
-              <ClientsList data={item}/>
+              <ClientsList data={item} />
             )
           )}
           />
         </ViewList>
         
       </ContainerListScreen>
-    </SafeArea>
+    </View>
   );
 }

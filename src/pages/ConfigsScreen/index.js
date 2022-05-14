@@ -20,13 +20,13 @@ export default function ConfigsPageScreen() {
 
   
   return (
-    <SafeArea>
+    <View style={{flex:1,}}>
       <ContainerHeaderConfigs >
-        <Image source={require('../../Img/LogoPNG.png')} 
-              style={{width:'60%', height:100, resizeMode:'contain', marginLeft:'10%'}}/>
+      <Image source={require('../../Img/LogoPNG.png')} 
+            style={{width:'60%', height:100, resizeMode:'contain', marginBottom:'-10%', marginLeft:'2%'}}/>
         
         <Image source={require('../../Img/ListClient.png')} 
-              style={{width:'20%', height:'60%', resizeMode:'contain', marginRight:'5%', marginBottom:'4%',}}/>
+              style={{width:'20%', height:'60%', resizeMode:'contain', marginRight:'5%', marginBottom:'-8%',}}/>
       </ContainerHeaderConfigs>
 
       <View style={{width:'100%', height:7, backgroundColor:'#BFB47A'}}>
@@ -43,6 +43,6 @@ export default function ConfigsPageScreen() {
         </ButtonAct>
         
       </ContainerConfigsScreen>
-    </SafeArea>
+    </View>
   );
 }

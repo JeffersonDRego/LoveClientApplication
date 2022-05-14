@@ -29,6 +29,7 @@ export default function AppRoute(){
                 margin: 3,
                 padding: 2,
                 // borderColor:'#404040',
+                // height:100,
             },
             tabBarStyle:{
                 backgroundColor:'#262626',
@@ -36,9 +37,8 @@ export default function AppRoute(){
                 // borderBottomWidth:5,
                 borderTopColor:'black',
                 // borderBottomColor:'#A61F1F',
-                height: 65,
-                
-            }
+                height: Platform.OS === 'ios' ? 90 : 70,  
+            },
         }}
         >
             <Tab.Screen

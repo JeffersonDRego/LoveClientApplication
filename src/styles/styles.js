@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const SafeArea = styled.SafeAreaView`
 flex:1;
-background-color: #404040;
+background-color: #0D0D0D;
 /* padding:1px;
 border-width: 2px;
 border-color: red; */
@@ -69,7 +69,7 @@ justify-content: space-between;
 align-items: center;
 background-color: #0D0D0D;
 width: 100%;
-height: 20%;
+height: 18%;
 padding: 10px;
 /* margin-top: 35px; */
 `
@@ -103,50 +103,65 @@ export const ContainerHeaderList = styled.View`
 /* flex:1; */
 flex-direction:row;
 justify-content: space-between;
-align-items: flex-end;
+align-items: center;
 background-color: #0D0D0D;
 width: 100%;
-height: 20%;
+height: 18%;
+padding: 10px;
+/* margin-top: 35px; */
 `
 export const ContainerListScreen = styled.View`
 /* flex:1; */
 height: 100%;
 /* flex-direction:column; */
-justify-content: center;
+/* justify-content: center; */
 align-items: center;
 background-color: #262626;
 `
 export const ViewList = styled.View`
 margin-Bottom:50px;
 height:40%;
-width:100%;
-justify-Content:center;
-border-width: 3px;
+width:98%;
+padding: 6px;
+/* justify-Content:center; */
+align-items: center;
+/* border-width: 2px; */
 border-radius: 5px;
-border-color: #BFB47A;
+/* border-color: #BFB47A; */
 `
 export const ListaClientes = styled.FlatList`
-padding: 10px;
-background-color:#0D0D0D;
+padding: 2px;
+background-color:#404040;
 border-radius: 5px;
+width: 100%;
 `
-export const  ButtonActList = styled.TouchableOpacity`
-margin-top: 10px;
-margin-bottom: 20px;
-width:30%;
+export const  ButtonActListScreen = styled.TouchableOpacity`
+width:140px;
 height:40px;
-background-Color:#BFB47A;
-border-Radius:7px;
+background-Color:#aaa;
+border-Radius:10px;
 justify-Content:center;
 align-Items:center;
-/* box-shadow: 10px 5px 5px black; */
-elevation:5;
+/* elevation:2; */
 `
+
+// export const  ButtonActList = styled.TouchableOpacity`
+// margin-top: 10px;
+// margin-bottom: 20px;
+// width:30%;
+// height:40px;
+// background-Color:#BFB47A;
+// border-Radius:7px;
+// justify-Content:center;
+// align-Items:center;
+// /* box-shadow: 10px 5px 5px black; */
+// elevation:5;
+// `
 
 //-------------------------------------COMPONENT CLIENTLIST
 export const ContainerList = styled.View`
-/* background-color: #FFF; */
-padding: 3px;
+background-color: #AAAAAA;
+padding: 5px;
 /* height: 50%; */
 `
 export const ViewClient = styled.View`
@@ -154,23 +169,16 @@ background-color: #262626;
 flex-direction:row;
 justify-content: space-between;
 align-items: center;
-border-radius: 3px;
-padding: 7px;
-margin-bottom: 10px;
-width: 100%;
+border-radius: 15px;
+padding: 8px;
+margin-top: 6px;
+width: 98%;
 `
 export const InfosView = styled.View`
-/* background-color: #1212; */
-/* flex-direction: column; */
 padding: 2px;
 justify-content: space-between;
 width: 70%;
 
-`
-export const TextName = styled.Text`
-color: #FFF;
-font-size: 18px;
-margin-left: 3px;
 `
 export const ButtonsView = styled.View`
 /* background-color: #1212; */
@@ -181,6 +189,11 @@ width: 15%;
 /* height: 100%; */
 
 `
+export const TextName = styled.Text`
+color: #FFF;
+font-size: 18px;
+margin-left: 3px;
+`
 
 export const IconView = styled.View`
 /* padding: 3px; */
@@ -190,8 +203,8 @@ border-radius: 5px;
 `
 //-------------------------------------COMPONENT EDIT CLIENT
 export const ContainerEditScreen = styled.View`
-/* flex:1; */
-height: 100%;
+flex:1;
+/* height: 100%; */
 /* flex-direction:column; */
 /* justify-content: center; */
 /* align-items: center; */
@@ -199,15 +212,17 @@ background-color: #262626;
 `
 
 
-//-----------------------------------------CONFIGS SCREEN
+//--------------------------------------------------------------CONFIGS SCREEN
 export const ContainerHeaderConfigs = styled.View`
 /* flex:1; */
 flex-direction:row;
 justify-content: space-between;
-align-items: flex-end;
+align-items: center;
 background-color: #0D0D0D;
 width: 100%;
-height: 20%;
+height: 18%;
+padding: 10px;
+/* margin-top: 35px; */
 `
 export const ContainerConfigsScreen = styled.View`
 /* flex:1; */

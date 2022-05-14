@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {TouchableOpacity, Text } from 'react-native';
+import {TouchableOpacity, Text, View } from 'react-native';
 import { ContainerList, ViewClient, TextName, ButtonsView, IconView, InfosView } from '../../../styles/styles';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import { AuthContext } from '../../../contexts/auth';
@@ -17,13 +17,18 @@ export default function ClientsList({data, deleteItem, editItem}) {
 
         <ViewClient>
             <InfosView>
-              <TextName>{data.nameClient + ' com ' + data.purchases + ' carimbos'}</TextName>
+              <TextName>{data.nameClient}</TextName>
+              
+              <View style={{flexDirection:'row'}}>
+                <TextName style={{ fontWeight:'bold'}}>Telefone:</TextName>
+                <TextName style={{}}>{data.phoneClient}</TextName>
+              </View>
             </InfosView>
     
             <ButtonsView>
               <IconView>
                 <TouchableOpacity onPress={()=>editItem(data)}>
-                  <IonIcons name="arrow-redo" size={30} color={'white'}></IonIcons>
+                  <IonIcons name="arrow-redo" size={35} color={'#BFB47A'}></IonIcons>
                 </TouchableOpacity>
               </IconView>
     

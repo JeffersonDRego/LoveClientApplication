@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from "react";
-import { Text, ActivityIndicator, Keyboard, Alert, TouchableOpacity, Image, View } from "react-native";
+import { Text, ActivityIndicator, Keyboard, KeyboardAvoidingView ,Alert, TouchableOpacity, Image, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import firebase from "../../services/firebaseConnection";
 import { AuthContext } from "../../contexts/auth";
@@ -13,12 +13,12 @@ import {ContainerHeaderHome, Container, ButtonAct, TextInputs, TextsLogin, SafeA
 export default function Home({data}) {
   const navigation = useNavigation();
   
-  const {user, Logout, loading} = useContext(AuthContext);
+  const {user, Logout, storageUser, loadStoragedUser} = useContext(AuthContext);
 
   const [nameClient, setNameClient] = useState(null);
   const [phoneClient, setPhoneClient] = useState(null);
   const [purchases, setPurchases] = useState(0);
-  
+  const [loading, setLoading] = useState(false);
   function handleLogout(){
 
     Alert.alert(
@@ -93,14 +93,17 @@ export default function Home({data}) {
   }
   
   return (
-    <SafeArea>
+  
+  
+
+    <View style={{flex:1}}>
       <ContainerHeaderHome>
         <Image source={require('../../Img/LogoPNG.png')} 
             style={{width:'60%', height:100, resizeMode:'contain', marginBottom:'-10%', marginLeft:'2%'}}/>
         
         <View style={{marginTop:20}}>
           <TouchableOpacity onPress={handleLogout}>
-            <IonIcons style={{marginRight:10, marginBottom:-5}} name={'exit'} size={38} color={'red'}/>
+            <IonIcons style={{marginRight:10, marginBottom:-5}} name={'exit'} size={38} color={'#FFF'}/>
             <Text style={{marginRight:18, marginBottom:-20,color:'#FFF'}}>SAIR</Text>
       
           </TouchableOpacity>
@@ -170,6 +173,6 @@ export default function Home({data}) {
         </ButtonAct>
       </Container>
 
-    </SafeArea>
+    </View>
   );
 }
