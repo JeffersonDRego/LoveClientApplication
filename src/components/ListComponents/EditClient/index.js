@@ -1,17 +1,24 @@
-import React, {useContext, useState} from 'react';
-import { View, Text, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import React, {useContext, useState, useRef} from 'react';
+import { View, Text, TouchableOpacity, Alert, ActivityIndicator, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ButtonAct, SafeArea, ContainerEditScreen, TextsLogin, IconView } from '../../../styles/styles';
 import firebase from "../../../services/firebaseConnection";
 import { AuthContext } from "../../../contexts/auth";
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import MaskInput, {Masks} from 'react-native-mask-input';
+import { TextInputs } from '../../../styles/styles';
 
 export default function EditClient({route}) {
   const {user,storageUser,loadStoragedUser} = useContext(AuthContext);
   const [loading,setLoading] = useState(false);
   const navigation = useNavigation();
   const uid = user && user.uid;
-  
+  const [infoPurchase, setInfoPurchase] = useState(null);
+  const inputInfo = useRef();
+  const [type,setType] = useState('NoEdit');
+  const [newName, setNewName] = useState('');
+  const [newPhone, setNewPhone] = useState('');
+
   //EDITANDO CLIENTE
   function handleEdit(data){
     if(data.purchases == 5){
@@ -27,14 +34,15 @@ export default function EditClient({route}) {
             {
               text:'CONFIRMAR',
               onPress: ()=> {handleEditPurchaseToZero(data);
-              navigation.navigate('ListPageScreen');
+              navigation.navigate('ListScreen');
               }
             }
           ]
         )
       )
     }else{
-      handleEditPurchaseClient(data)
+      handleEditPurchaseClient(data);
+      navigation.navigate('ListScreen');
     }
   }
   async function handleEditPurchaseToZero(data){
@@ -49,7 +57,6 @@ export default function EditClient({route}) {
     })
     navigation.navigate('ListPageScreen')
   }
-  
    //DELETANDO CLIENTE
    function handleDeleteClient(data){
     Alert.alert(
@@ -92,8 +99,51 @@ export default function EditClient({route}) {
     })
   }
   
+  function TextInputEditName(){
+    if(type === 'NoEdit'){
+      return
+    }
+    if(type === 'EditName'){
+      return (
+        <View style={{flexDirection:'row', width:'100%', marginBottom:5, alignItems:'center', }}>
+          <TextInputs
+          style={{width:'70%'}}
+          onChangeText={text=>setNewName(text)}
+          value={newName}
+          placeholder="Novo Nome"
+          // keyboardType="numeric"
+          />
+          <ButtonAct style={{width:'23%'}}>
+            <Text>ALTERAR</Text>
+          </ButtonAct>
+        </View>
+      )}
+  }
+  function TextInputEditPhone(){
+    if(type === 'NoEdit'){
+      return
+    }
+    if(type === 'EditPhone'){
+      return(
+        <View style={{flexDirection:'row', width:'100%', marginBottom:5, alignItems:'center', }}>
+          <MaskInput
+          style={styles.InputPhone}
+          value={newPhone}
+          inputType="number"
+          onChangeText={(text, rawValue)=>setNewPhone(rawValue)}
+          keyboardType="numeric"
+          mask={Masks.BRL_PHONE}
+          />
+          <ButtonAct style={{width:'23%'}}>
+            <Text>ALTERAR</Text>
+          </ButtonAct>
+        </View>
+        
+      )
+    }
+
+  }
   return (
-    <SafeArea>
       <ContainerEditScreen>
         <ButtonAct onPress={()=> console.log(route.params.data.key)}>
           <Text>AQUI</Text>
@@ -102,68 +152,88 @@ export default function EditClient({route}) {
         <View style={{flexDirection:'row', height:'10%',alignItems:'center', justifyContent:'center'}}>
           <TextsLogin style={{fontSize:22, fontWeight:'bold'}}>Informações do Cliente:</TextsLogin>
         </View>
-        <View style={{paddingLeft:15,flexDirection:'column',width:'100%', height:'4%', backgroundColor:'#404040'}}>
+        
+        <View style={{paddingLeft:15, paddingRight:10,flexDirection:'column',width:'100%', backgroundColor:'#404040', marginBottom:10}}>
           <TextsLogin style={{fontSize:22}}>{route.params?.data.nameClient}</TextsLogin>
-        </View>
-        <View style={{flexDirection:'row', alignItems:'center', marginBottom:10, justifyContent:'flex-end', backgroundColor:'#404040'}}>
-          <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginRight:10, marginTop:10}}>
-            <TextsLogin style={{fontSize:16, color:'skyblue', marginRight:10,}}>Editar Nome</TextsLogin>
-            <IonIcons name="hammer-outline" size={30} color={'skyblue'}></IonIcons>
+          <TouchableOpacity onPress={()=>setType(type=>type==='NoEdit' ? 'EditName' : 'NoEdit')}
+          style={{flexDirection:'row', alignItems:'center', marginRight:10, marginTop:10, alignSelf:'flex-end'}}>
+            <TextsLogin style={{fontSize:16, color:'skyblue',marginRight:10}}>EDITAR NOME</TextsLogin>
+            <IonIcons name="chatbox-ellipses-outline" size={30} color={'skyblue'}></IonIcons>
           </TouchableOpacity>
+          {TextInputEditName()}
         </View>
 
-        <View style={{paddingLeft:15,flexDirection:'column',width:'100%', height:'4%', backgroundColor:'#404040'}}>
+        <View style={{paddingLeft:15, paddingRight:10 ,flexDirection:'column',width:'100%', backgroundColor:'#404040', marginBottom:10}}>
           <TextsLogin style={{fontSize:22}}>{route.params?.data.phoneClient}</TextsLogin>
-        </View>
-        <View style={{flexDirection:'row', alignItems:'center', marginBottom:10, justifyContent:'flex-end', backgroundColor:'#404040'}}>
-          <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginRight:10, marginTop:10}}>
-            <TextsLogin style={{fontSize:16, color:'skyblue', marginRight:10,}}>Editar Telefone</TextsLogin>
-            <IonIcons name="hammer-outline" size={30} color={'skyblue'}></IonIcons>
+          <TouchableOpacity onPress={()=>setType(type=>type==='NoEdit' ? 'EditPhone' : 'NoEdit')}
+          style={{flexDirection:'row', alignItems:'center', marginRight:10, alignSelf:'flex-end'}}>
+            <TextsLogin style={{fontSize:16, color:'skyblue',marginRight:10}}>EDITAR TELEFONE</TextsLogin>
+            <IonIcons name="call-outline" size={30} color={'skyblue'}></IonIcons>
           </TouchableOpacity>
+          {TextInputEditPhone()}
         </View>
 
-        <View style={{paddingLeft:15,flexDirection:'row',width:'100%', height:'4%', backgroundColor:'#404040'}}>
-          {/* <View style={{flexDirection:'row', alignItems:'flex-start',borderWidth:1, borderColor:'red'}}> */}
-            <TextsLogin style={{fontSize:22, fontWeight:'bold'}}>Carimbos:    </TextsLogin>
+        <View style={{paddingLeft:15, paddingRight:10 ,flexDirection:'row', alignItems:'center', justifyContent:'space-between', width:'100%', backgroundColor:'#404040', marginBottom:10}}>
+            <TextsLogin style={{fontSize:22, fontWeight:'bold'}}>Carimbos:</TextsLogin>
             <TextsLogin style={{fontSize:22}}>{route.params?.data.purchases}</TextsLogin>
-          {/* </View> */}
+            <TouchableOpacity onPress={()=>inputInfo.current.focus()} style={{flexDirection:'row', alignItems:'center', marginRight:10, marginTop:10}}>
+                  <TextsLogin style={{fontSize:16, color:'skyblue', marginRight:10,}}>ADICIONAR CARIMBO</TextsLogin>
+                  <IonIcons name="add-circle" size={35} color={'skyblue'} style={{marginBottom:'2%'}}></IonIcons>
+            </TouchableOpacity>
         </View>
-        <View style={{flexDirection:'row', alignItems:'center', marginBottom:10, justifyContent:'flex-end', backgroundColor:'#404040'}}>
-          <TouchableOpacity onPress={()=> handleEdit(route.params.data)}style={{flexDirection:'row', alignItems:'center', marginRight:10, marginTop:10}}>
-           
-                <TextsLogin style={{fontSize:16, color:'skyblue', marginRight:10,}}>Adicionar um Carimbo</TextsLogin>
-                <IonIcons name="add-circle" size={50} color={'green'}></IonIcons>
-              
+        <View style={{width:'100%', flexDirection:'row', justifyContent:'space-around'}}>
+          <MaskInput
+          style={styles.InputInfoPurchase}
+          value={infoPurchase}
+          inputType="number"
+          onChangeText={(text, rawValue)=>setInfoPurchase(text)}
+          keyboardType="numeric"
+          mask={Masks.BRL_CURRENCY}
+          placeholder={'R$ VALOR DA COMPRA'}
+          ref={inputInfo}
+          />
+          <ButtonAct style={{marginTop:10, width:'35%'}}>
+            <TextsLogin style={{fontSize:14}}> Cadastrar Compra</TextsLogin>
+          </ButtonAct>
+        </View> 
+
+        <View style={{flexDirection:'column', flex:1, width:'100%', justifyContent:'flex-end', paddingBottom:20, paddingRight:10}}>    
+          <TouchableOpacity style={{alignSelf:'flex-end' ,flexDirection:'row', alignItems:'center',backgroundColor:'red', width:'42%',
+           justifyContent:'center', borderRadius:5, padding:5}}onPress={()=> handleDeleteClient(route.params.data)}>
+            <TextsLogin style={{marginRight:'5%', color:'#FFFFFF',}}>Excluir Cliente</TextsLogin>
+            {
+              loading?(
+                <ActivityIndicator size={30} color={"#FFF"}/>
+              ) : (
+                <IonIcons name="trash" size={30} color={'white'}></IonIcons>
+              )
+            }
           </TouchableOpacity>
         </View>
 
-        <View style={{flexDirection:'row', height:'20%', width:'100%', justifyContent:'space-between', padding:20,}}>
-          <IconView style={{backgroundColor:'red', width:'18%', height:'90%' }}>
-            <TouchableOpacity onPress={()=> handleDeleteClient(route.params.data)}>
-              {
-                loading?(
-                  <ActivityIndicator size={50} color={"#FFF"}/>
-                ) : (
-                  
-                  <IonIcons name="trash" size={50} color={'white'}></IonIcons>
-                )
-              }
-            </TouchableOpacity>
-          </IconView>
-          
-          <IconView style={{backgroundColor:'red', width:'18%', height:'90%' }}>
-            <TouchableOpacity onPress={()=> handleDeleteClient(route.params.data)}>
-              {
-                loading?(
-                  <ActivityIndicator size={50} color={"#FFF"}/>
-                ) : (
-                  <IonIcons name="trash" size={50} color={'white'}></IonIcons>
-                )
-              }
-            </TouchableOpacity>
-          </IconView>
-        </View>
       </ContainerEditScreen>
-    </SafeArea>
+
+
     );
 }
+
+const styles = StyleSheet.create({
+  InputInfoPurchase:{
+    width: '55%',
+    height: 40,
+    backgroundColor:'#DCDCDC',
+    borderRadius:5,
+    padding:5,
+    margin:10,
+    fontSize: 17,
+  },
+  InputPhone:{
+    width: '70%',
+    height: 40,
+    backgroundColor:'#DCDCDC',
+    borderRadius:5,
+    padding:5,
+    margin:10,
+    fontSize: 17,
+  }
+})

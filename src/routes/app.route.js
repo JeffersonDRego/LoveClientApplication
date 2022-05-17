@@ -54,7 +54,7 @@ export default function AppRoute(){
             }}
             />
             <Tab.Screen
-            name="ListPageScreen"
+            name="ListScreen"
             component={ListStack}
             options={{
                 // headerShown:true, 
@@ -67,7 +67,7 @@ export default function AppRoute(){
             />
 
             <Tab.Screen
-            name="ConfigsPageScreen"
+            name="ConfigsScreen"
             component={ConfigsStack}
             options={{
                 // headerShown:true, 

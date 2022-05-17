@@ -120,7 +120,7 @@ background-color: #262626;
 `
 export const ViewList = styled.View`
 margin-Bottom:50px;
-height:40%;
+height:30%;
 width:98%;
 padding: 6px;
 /* justify-Content:center; */
@@ -160,7 +160,7 @@ align-Items:center;
 
 //-------------------------------------COMPONENT CLIENTLIST
 export const ContainerList = styled.View`
-background-color: #AAAAAA;
+/* background-color: #AAAAAA; */
 padding: 5px;
 /* height: 50%; */
 `

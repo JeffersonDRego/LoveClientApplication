@@ -34,7 +34,6 @@ export default function Login() {
       return
     }else{
       return (
-  
             <View style={{width:'80%', marginBottom:5}}>
               <TextsLogin>Nome:</TextsLogin>
               <TextInputsCadastro
@@ -44,8 +43,6 @@ export default function Login() {
               // keyboardType="numeric"
               />
             </View>
-
-
       )}}
 
  return (
