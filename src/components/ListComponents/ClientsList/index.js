@@ -5,7 +5,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import { AuthContext } from '../../../contexts/auth';
 import { useNavigation } from '@react-navigation/native';
 
-import EditClient from '../EditClient';
+// import EditClient from '../EditClient';
 
 export default function ClientsList({data, deleteItem, editItem}) {
   const {user,} = useContext(AuthContext);
@@ -26,10 +26,9 @@ export default function ClientsList({data, deleteItem, editItem}) {
             </InfosView>
     
             <ButtonsView>
-              <IconView>
-                <TouchableOpacity onPress={()=>editItem(data)}>
-                  <IonIcons name="arrow-redo" size={35} color={'#BFB47A'}></IonIcons>
-                </TouchableOpacity>
+              <IconView style={{flexDirection:'column', justifyContent:'center'}}>
+                <IonIcons name="person-outline" size={30} color={'#BFB47A'}></IonIcons>
+                <TextName style={{color:'#F2F2F2', fontSize:12, marginTop:-5}}>EDITAR</TextName>
               </IconView>
     
               {/* <IconView style={{backgroundColor:'blue'}}>

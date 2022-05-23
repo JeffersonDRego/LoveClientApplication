@@ -53,24 +53,27 @@ export default function Login() {
 
     {/* <TextsTitleLogin>{type} Loveclient</TextsTitleLogin> */}
     {TextInputName()}
-    <View style={{width:'80%', marginBottom:-5}}>
+    {/* <View style={{width:'80%', marginBottom:-5}}>
       <TextsLogin>E-mail:</TextsLogin>
-    </View>
+    </View> */}
     <TextInputsLogin
     onChangeText={text=>setEmail(text)}
     value={email}
     placeholder="E-mail"
-    // keyboardType="numeric"
+    placeholderTextColor="#696969"
+    selectionColor={'#696969'}
     />
 
-    <View style={{width:'80%', marginBottom:-5}}>
+    {/* <View style={{width:'80%', marginBottom:-5}}>
       <TextsLogin>Senha:</TextsLogin>
-    </View>
+    </View> */}
     <TextInputsLogin
     onChangeText={text=>setPassword(text)}
     value={password}
     placeholder="Senha"
+    placeholderTextColor="#696969"
     secureTextEntry={true}
+    selectionColor={'#696969'}
     />
 
     <ButtonActLogin onPress={HandleSigInOrSignUp}>
@@ -78,7 +81,7 @@ export default function Login() {
         loading?(
           <ActivityIndicator size={20} color={"#FFF"}/>
         ) : (
-          <TextsLogin style={{color:"#0D0D0D", }}>
+          <TextsLogin style={{color:"#FFF", }}>
             {type === 'Login' ? 'Acessar' : 'Cadastrar'}
           </TextsLogin>
         )

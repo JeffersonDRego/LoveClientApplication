@@ -8,7 +8,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import MaskInput, {Masks} from 'react-native-mask-input';
 import { TextInputs } from '../../../styles/styles';
 
-export default function EditClient({route}) {
+export default function EditClient({data}) {
   const {user,storageUser,loadStoragedUser} = useContext(AuthContext);
   const [loading,setLoading] = useState(false);
   const navigation = useNavigation();
@@ -145,7 +145,7 @@ export default function EditClient({route}) {
   }
   return (
       <ContainerEditScreen>
-        <ButtonAct onPress={()=> console.log(route.params.data.key)}>
+        <ButtonAct onPress={()=> console.log(data.key)}>
           <Text>AQUI</Text>
         </ButtonAct>
 
@@ -154,7 +154,7 @@ export default function EditClient({route}) {
         </View>
         
         <View style={{paddingLeft:15, paddingRight:10,flexDirection:'column',width:'100%', backgroundColor:'#404040', marginBottom:10}}>
-          <TextsLogin style={{fontSize:22}}>{route.params?.data.nameClient}</TextsLogin>
+          <TextsLogin style={{fontSize:22}}>{data.nameClient}</TextsLogin>
           <TouchableOpacity onPress={()=>setType(type=>type==='NoEdit' ? 'EditName' : 'NoEdit')}
           style={{flexDirection:'row', alignItems:'center', marginRight:10, marginTop:10, alignSelf:'flex-end'}}>
             <TextsLogin style={{fontSize:16, color:'skyblue',marginRight:10}}>EDITAR NOME</TextsLogin>
@@ -164,7 +164,7 @@ export default function EditClient({route}) {
         </View>
 
         <View style={{paddingLeft:15, paddingRight:10 ,flexDirection:'column',width:'100%', backgroundColor:'#404040', marginBottom:10}}>
-          <TextsLogin style={{fontSize:22}}>{route.params?.data.phoneClient}</TextsLogin>
+          <TextsLogin style={{fontSize:22}}>{data.phoneClient}</TextsLogin>
           <TouchableOpacity onPress={()=>setType(type=>type==='NoEdit' ? 'EditPhone' : 'NoEdit')}
           style={{flexDirection:'row', alignItems:'center', marginRight:10, alignSelf:'flex-end'}}>
             <TextsLogin style={{fontSize:16, color:'skyblue',marginRight:10}}>EDITAR TELEFONE</TextsLogin>
@@ -175,7 +175,7 @@ export default function EditClient({route}) {
 
         <View style={{paddingLeft:15, paddingRight:10 ,flexDirection:'row', alignItems:'center', justifyContent:'space-between', width:'100%', backgroundColor:'#404040', marginBottom:10}}>
             <TextsLogin style={{fontSize:22, fontWeight:'bold'}}>Carimbos:</TextsLogin>
-            <TextsLogin style={{fontSize:22}}>{route.params?.data.purchases}</TextsLogin>
+            <TextsLogin style={{fontSize:22}}>{data.purchases}</TextsLogin>
             <TouchableOpacity onPress={()=>inputInfo.current.focus()} style={{flexDirection:'row', alignItems:'center', marginRight:10, marginTop:10}}>
                   <TextsLogin style={{fontSize:16, color:'skyblue', marginRight:10,}}>ADICIONAR CARIMBO</TextsLogin>
                   <IonIcons name="add-circle" size={35} color={'skyblue'} style={{marginBottom:'2%'}}></IonIcons>
@@ -199,7 +199,7 @@ export default function EditClient({route}) {
 
         <View style={{flexDirection:'column', flex:1, width:'100%', justifyContent:'flex-end', paddingBottom:20, paddingRight:10}}>    
           <TouchableOpacity style={{alignSelf:'flex-end' ,flexDirection:'row', alignItems:'center',backgroundColor:'red', width:'42%',
-           justifyContent:'center', borderRadius:5, padding:5}}onPress={()=> handleDeleteClient(route.params.data)}>
+           justifyContent:'center', borderRadius:5, padding:5}}onPress={()=> handleDeleteClient(data)}>
             <TextsLogin style={{marginRight:'5%', color:'#FFFFFF',}}>Excluir Cliente</TextsLogin>
             {
               loading?(

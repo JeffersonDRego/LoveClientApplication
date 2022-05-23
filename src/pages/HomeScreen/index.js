@@ -42,7 +42,6 @@ export default function Home({data}) {
       alert(phoneClient)
       return;
     }
-    console.log(phoneClient)
     Alert.alert(
       'Confirme o TELEFONE',
       `Nome: ${nameClient}  Telefone: ${phoneClient}`,
@@ -80,6 +79,10 @@ export default function Home({data}) {
           name: user.name,
           email: user.email,
           clients: user.clients + 1,
+          numTotalCarimbos:user.numTotalCarimbos,
+          validadeCarimbos:user.validadeCarimbos,
+          valorMin:user.valorMin,
+          configurated:user.configurated
       }
       
       storageUser(data);
@@ -88,7 +91,7 @@ export default function Home({data}) {
     setNameClient('');
     setPhoneClient('');
     Keyboard.dismiss();
-    navigation.navigate('ListPageScreen');
+    navigation.navigate('ListScreen');
     setLoading(false);
     alert('CLIENTE CADASTRADO COM SUCESSO');
   }
@@ -111,58 +114,73 @@ export default function Home({data}) {
         </View>
       </ContainerHeaderHome>
 
-      <View style={{width:'100%', height:7, backgroundColor:'#BFB47A'}}>
-      </View>
-      <View style={{width:'100%', height:2, backgroundColor:'#FFF'}}>
+      {/* <View style={{width:'100%', height:7, backgroundColor:'#F2EDA2'}}>
+      </View> */}
+      <View style={{width:'100%', height:1, backgroundColor:'#F2F2F2'}}>
       </View>
 
       <Container>
+        <TouchableOpacity onPress={()=>{console.log(user)}}>
+          <TextsLogin>ASOSAOKSAOKOSAK</TextsLogin>
+        </TouchableOpacity>
         <TextsLogin style={{fontWeight:'bold', fontSize:22}}>Olá {user.name}</TextsLogin>
         <TextsLogin style={{fontWeight:'bold', fontSize:20}}>Você possui {user.clients} Clientes cadastrados.</TextsLogin>
-        <TextsLogin style={{ fontSize:20, textAlign:'center', marginBottom:15, margin:'10%'}}>CADASTRAR NOVO CLIENTE:</TextsLogin>
         
-        <View style={{width:'80%', marginBottom:-5}}>
-          <TextsLogin>Nome do Cliente:</TextsLogin>
-        </View>
-        <TextInputs
-        onChangeText={(text)=>{setNameClient(text)}}
-        value={nameClient}
-        placeholder="Insira o Nome do Cliente"
-        />
+        <View style={{backgroundColor:'#223A40', marginTop:20, borderRadius:5,height:320, width:'100%', justifyContent:'center', alignItems:'center', }}>
 
-        <View style={{width:'80%', marginBottom:-5}}>
-          <TextsLogin>Telefone do Cliente:</TextsLogin>
-        </View>
-        <MaskInput
-        style={styles.InputPhone}
-        value={phoneClient}
-        inputType="number"
-        onChangeText={(text, rawValue)=>setPhoneClient(rawValue)}
-        keyboardType="numeric"
-        mask={Masks.BRL_PHONE}
-        />
-      
-        
-
-        {/* <View style={{width:'80%', marginBottom:-5}}>
-          <TextsLogin>Confirmar Telefone:</TextsLogin>
+          <TextsLogin style={{ fontSize:20, textAlign:'center', marginBottom:15, color:'#fff'}}>CADASTRAR NOVO CLIENTE:</TextsLogin>
+          
+          <View style={{width:'90%', marginBottom:-5}}>
+            <TextsLogin>Nome do Cliente:</TextsLogin>
           </View>
           <TextInputs
-        onChangeText={(text)=>{setConfirmPhone(text)}}
-        value={confirmPhone}
-        placeholder="Confirme o Telefone do Cliente"
-        keyboardType="numeric"
-        /> */}
+          onChangeText={(text)=>{setNameClient(text)}}
+          value={nameClient}
+          placeholder="Insira o Nome do Cliente"
+          placeholderTextColor="#696969"
+          style={{width:'90%'}}
+          selectionColor={'#898989'}
+          />
 
-        <ButtonAct style={{marginTop:20, backgroundColor:'#D93232'}} onPress={handleSubmit} >
-        {
-        loading?(
-          <ActivityIndicator size={20} color={"#FFF"}/>
-        ) : (
-          <Text style={{color:'#FFF', fontSize:19, fontWeight:'bold'}}>Cadastrar</Text>
-        )
-      }
-        </ButtonAct>
+          <View style={{width:'90%', marginBottom:-5}}>
+            <TextsLogin>Telefone do Cliente:</TextsLogin>
+          </View>
+          <MaskInput
+          style={styles.InputPhone}
+          value={phoneClient}
+          inputType="number"
+          onChangeText={(text, rawValue)=>setPhoneClient(rawValue)}
+          keyboardType="numeric"
+          placeholderTextColor="#696969"
+          mask={Masks.BRL_PHONE}
+          selectionColor={'#696969'}
+          />
+        
+          
+
+          {/* <View style={{width:'80%', marginBottom:-5}}>
+            <TextsLogin>Confirmar Telefone:</TextsLogin>
+            </View>
+            <TextInputs
+          onChangeText={(text)=>{setConfirmPhone(text)}}
+          value={confirmPhone}
+          placeholder="Confirme o Telefone do Cliente"
+          keyboardType="numeric"
+          /> */}
+
+          <TouchableOpacity 
+          onPress={handleSubmit}
+          style={{elevation:5,flexDirection:'row',backgroundColor:'#2A5959', alignItems:'center',alignSelf:'center', margin:10, padding:10, borderRadius:3}}>
+            <Text style={{color:'#FFF', fontSize:16, marginRight:8, fontWeight:'bold'}}>Cadastrar</Text>
+          {
+          loading?(
+            <ActivityIndicator size={20} color={"#FFF"}/>
+          ) : (
+            <IonIcons  name="person-add-outline" size={25} color={'#FFF'}/>
+          )
+        }
+          </TouchableOpacity>
+        </View>
       </Container>
 
     </View>
@@ -171,7 +189,7 @@ export default function Home({data}) {
 
 const styles = StyleSheet.create({
   InputPhone:{
-    width: '80%',
+    width: '90%',
     height: 40,
     backgroundColor:'#DCDCDC',
     borderRadius:5,

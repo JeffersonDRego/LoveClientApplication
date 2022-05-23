@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import ConfigsPageScreen from "../pages/ConfigsScreen";
-import EditClient from "../components/ListComponents/EditClient";
+// import EditClient from "../components/ListComponents/EditClient";
 const Stack = createNativeStackNavigator();
 
 export default function ConfigsStack(){

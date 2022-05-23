@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import ListPageScreen from "../pages/ListScreen";
-import EditClient from "../components/ListComponents/EditClient";
+// import EditClient from "../components/ListComponents/EditClient";
 const Stack = createNativeStackNavigator();
 
 export default function ListStack(){
@@ -24,7 +24,7 @@ export default function ListStack(){
             }}
             />
 
-            <Stack.Screen
+            {/* <Stack.Screen
             name="EditClient"
             component={EditClient}
             options={{
@@ -37,7 +37,7 @@ export default function ListStack(){
                     backgroundColor:'#0D0D0D'
                 }
             }}
-            />
+            /> */}
 
         </Stack.Navigator>
     )

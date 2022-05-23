@@ -9,6 +9,7 @@ function AuthProvider({children}){
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [numberClients, setNumberClients] = useState(0);
+    // const [configurated, setConfigurated] = useState('noConfigurated');
     
     useEffect(()=>{
         loadStoragedUser()
@@ -36,7 +37,7 @@ function AuthProvider({children}){
     }
 
     
-    //LOGIN
+    //SIGNIN
     async function signIn(email, password){
         setLoading(true)
         await firebase.auth().signInWithEmailAndPassword(email, password)
@@ -49,6 +50,10 @@ function AuthProvider({children}){
                     name: snapshot.val().name,
                     email: value.user.email,
                     clients: snapshot.val().clients,
+                    numTotalCarimbos:snapshot.val().numTotalCarimbos,
+                    validadeCarimbos:snapshot.val().validadeCarimbos,
+                    valorMin:snapshot.val().valorMin,
+                    configurated:snapshot.val().configurated
                 }
                 setUser(data);
                 storageUser(data);
@@ -56,7 +61,7 @@ function AuthProvider({children}){
             })
         })
         .catch((error)=> {
-            alert(error.code)
+            alert(error)
             setLoading(false);
         })
     }
@@ -75,21 +80,23 @@ function AuthProvider({children}){
             let uid = value.user.uid;
             await firebase.database().ref('users').child(uid).set({
                 name: name,
-                clients: numberClients
+                clients: numberClients,
+                configurated: 'noConfigurated'
             })
             .then(()=>{
                 let data = {
                     uid: uid,
                     name: name,
                     email: value.user.email,
-                    clients: numberClients
+                    clients: numberClients,
+                    configurated: 'noConfigurated'
                 }
                 setUser(data)
                 storageUser(data)
                 setLoading(false)
             })
         }).catch((error)=> {
-            alert(error.code)
+            alert(error)
             setLoading(false)
         })
     }
@@ -101,7 +108,7 @@ function AuthProvider({children}){
     }
     
     return(
-        <AuthContext.Provider value={{signed: !!user, user, signUp, signIn, Logout, storageUser, loadStoragedUser, loading}}>
+        <AuthContext.Provider value={{signed: !!user, user, setUser, signUp, signIn, Logout, storageUser, loadStoragedUser, loading}}>
             {children}
         </AuthContext.Provider>
     )
