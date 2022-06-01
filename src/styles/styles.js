@@ -73,7 +73,7 @@ height: 130px;
 padding: 10px;
 /* margin-top: 35px; */
 `
-export const Container = styled.View`
+export const ContainerHome = styled.View`
 flex:1;
 justify-content: center;
 align-items: center;

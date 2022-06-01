@@ -13,12 +13,21 @@ export default function Login() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [numberClients, setNumberClients] = useState(0);
-
-  const {signUp, signIn, loading}= useContext(AuthContext);
+  const [imEstab, setImEstab] = useState(null);
+  const {signUp, signIn, signInClient, signUpClient, loading}= useContext(AuthContext);
   
   //FAZ CADASTRO OU LOGIN A PARTIR DO TYPE
- function HandleSigInOrSignUp(){    
+ function HandleSigInOrSignUpClient(){    
+    if(type==='Login'){
+      return(
+        signInClient(email, password)
+      )
+    }else{
+        signUpClient(email, password, name)
+    }
+  };
+
+  function HandleSigInOrSignUpEstab(){    
     if(type==='Login'){
       return(
         signIn(email, password)
@@ -42,6 +51,12 @@ export default function Login() {
               placeholder="Nome"
               // keyboardType="numeric"
               />
+              <TouchableOpacity onPress={()=>setImEstab(imEstab=>imEstab===null?'imEstab':null)} style={{ alignItems:'center', flexDirection:'row'}} >
+                <View style={{margin:10, width:28, height:28,backgroundColor:imEstab===null?'#FFF':'#FFA500', 
+                borderRadius:25, borderWidth:5, borderColor:'#F2F2F2'}}>
+                </View>
+                <TextsLogin style={{color:imEstab===null?'#FFF':'#FFA500'}}>ME CADASTRAR COMO LOJISTA</TextsLogin>
+              </TouchableOpacity>
             </View>
       )}}
 
@@ -75,8 +90,7 @@ export default function Login() {
     secureTextEntry={true}
     selectionColor={'#696969'}
     />
-
-    <ButtonActLogin onPress={HandleSigInOrSignUp}>
+    <ButtonActLogin onPress={imEstab===null ? HandleSigInOrSignUpClient : HandleSigInOrSignUpEstab}>
       {
         loading?(
           <ActivityIndicator size={20} color={"#FFF"}/>

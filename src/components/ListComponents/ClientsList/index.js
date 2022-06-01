@@ -23,6 +23,15 @@ export default function ClientsList({data, deleteItem, editItem}) {
                 <TextName style={{ fontWeight:'bold'}}>Telefone:</TextName>
                 <TextName style={{}}>{data.phoneClient}</TextName>
               </View>
+              {
+                data.firstPurchase?
+                <View style={{flexDirection:'row'}}>
+                  <TextName style={{ fontWeight:'bold'}}>1ª Compra:</TextName>
+                  <TextName style={{}}>{data.firstPurchase}</TextName>
+                </View>
+                :
+                <View><TextName>0 compras realizadas</TextName></View>
+              }
             </InfosView>
     
             <ButtonsView>

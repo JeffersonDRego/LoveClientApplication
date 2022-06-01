@@ -3,7 +3,6 @@ import { Text, TouchableOpacity, ScrollView, ActivityIndicator,Alert, Image, Vie
 import { useNavigation } from "@react-navigation/native";
 import firebase from "../../services/firebaseConnection";
 import { AuthContext } from "../../contexts/auth";
-import { format } from "date-fns";
 import IonIcons from  'react-native-vector-icons/Ionicons';
 
 import {SafeArea, SearchListaClientes, ContainerHeaderList, ContainerListScreen, ListaClientes, TextsLogin, TextInputs, 
@@ -36,7 +35,8 @@ export default function ListPageScreen(props) {
             key: childItem.key,
             nameClient: childItem.val().nameClient,
             phoneClient: childItem.val().phoneClient,
-            purchases: childItem.val().purchases
+            purchases: childItem.val().purchases,
+            firstPurchase: childItem.val().firstPurchase
           };
           setListClients(oldArray => [...oldArray, list].reverse());
         });
@@ -74,8 +74,7 @@ export default function ListPageScreen(props) {
     } else {
       setSearch(text);
     }
-  };
-  //
+  }
   const msgListEmpty=()=>{
     return(
       <View style={{height:60, alignItems:'center', justifyContent:'center'}}>
@@ -93,16 +92,19 @@ export default function ListPageScreen(props) {
     newList.sort((a, b)=> (a.nameClient > b.nameClient ? 1 : b.nameClient > a.nameClient ? -1 : 0))
     setListClients(newList);
   }
-
+  
+  
   return (
     <View style={{flex:1,}}>
 
       <ContainerHeaderList >
         <Image source={require('../../Img/LogoPNG.png')} 
         style={{width:'60%', height:100, resizeMode:'contain', marginBottom:'-10%', marginLeft:'2%'}}/>
-        
-        <Image source={require('../../Img/ListClient.png')} 
-              style={{width:'20%', height:'60%', resizeMode:'contain', marginRight:'5%', marginBottom:'-8%',}}/>
+        <View style={{marginTop:20}}>
+            <TouchableOpacity onPress={()=>{}}>
+              <IonIcons style={{marginRight:10, marginBottom:-15}} name={'list-outline'} size={60} color={'#FFA500'}/>
+            </TouchableOpacity>
+          </View>
       </ContainerHeaderList>
 
       {/* <View style={{width:'100%', height:7, backgroundColor:'#BFB47A'}}> */}
@@ -111,10 +113,13 @@ export default function ListPageScreen(props) {
       </View>
 
       <ContainerListScreen>
-
+        
+        {/* <TouchableOpacity onPress={()=>{}}>
+          <TextsLogin>ASOSAOKSAOKOSAK</TextsLogin>
+        </TouchableOpacity> */}
         <View style={{minHeight:150,maxHeight:300, justifyContent:'center', alignItems:'center', width:'100%', 
         marginTop:'5%', marginBottom:'5%'}}>
-          <TextsLogin>PESQUISAR CLIENTE:</TextsLogin>
+          <TextsLogin style={{fontWeight:'bold'}}>PESQUISAR CLIENTE:</TextsLogin>
           {/* <ButtonActListScreen onPress={()=>setShowList(showList=>showList==='unShow' ? 'Show' : 'unShow')}>
             <Text>alo</Text>
           </ButtonActListScreen> */}
@@ -150,8 +155,8 @@ export default function ListPageScreen(props) {
           
         </View>
 
-        {/* <View style={{width:'100%', height:0, backgroundColor:'#FFF'}}>
-        </View> */}
+        <View style={{width:'100%', borderStyle:'dashed', borderColor:'#AAA', borderWidth:1,  borderRadius:1, marginBottom:10, marginTop:10}}>
+        </View>
 
         <View style={{ width:'100%', height:300,marginTop:20
         , borderRadius:10, backgroundColor:'#223A40'}}>
@@ -166,38 +171,26 @@ export default function ListPageScreen(props) {
               <TextsLogin style={{fontSize:13}}>Abc</TextsLogin>
             </TouchableOpacity>
           </View>
-          
-          <ListaClientes style={{marginBottom:0}}
-            data={listClients}
-            keyExtractor={item => item.key}
-            renderItem={({item})=> (
-              loading?(
-                <ActivityIndicator size={20} color={"#FFF"} style={{marginTop:30,marginBottom:35}}/>
-              ):(
-                <ClientsList data={item}/>
-                )
-            )}
-          />
-        </View>
-
-        {/* <ViewList>
-          <TextsLogin style={{marginBottom: 10}}>EDITAR CLIENTES:</TextsLogin>
-
-          <TextsLogin style={{marginBottom: 10}}>LISTA DE CLIENTES:</TextsLogin>
-          <ListaClientes
-          // showsVerticalScrollIndicator={false}
-          data={listClients}
-          keyExtractor={item=>item.key}
-          renderItem={({item})=> (
-            loading?(
-              <ActivityIndicator size={20} color={"#FFF"} style={{marginBottom:'10%'}}/>
-            ) : (
-              <ClientsList data={item} />
-            )
-          )}
-          /> 
-        </ViewList> */}
-        
+          {
+            user.clients==0
+            ?
+            <View style={{width:'100%', alignItems:'center', backgroundColor:'red', marginTop:15}}>
+              <Text style={{color:'#FFF', fontSize:15, fontWeight:'bold'}}>Você não possui clientes cadastrados</Text>
+            </View>
+            :
+            <ListaClientes style={{marginBottom:0}}
+              data={listClients}
+              keyExtractor={item => item.key}
+              renderItem={({item})=> (
+                loading?(
+                  <ActivityIndicator size={20} color={"#FFF"} style={{marginTop:30,marginBottom:35}}/>
+                ):(
+                  <ClientsList data={item}/>
+                  )
+              )}
+            />
+          }
+        </View>        
       </ContainerListScreen>
     </View>
   );
