@@ -1,5 +1,5 @@
-import React, {useState, useRef, useContext} from "react";
-import { ActivityIndicator, TouchableOpacity, View, Image } from "react-native";
+import React, {useState, useContext} from "react";
+import { ActivityIndicator, Text, TouchableOpacity, View, Image } from "react-native";
 import { ContainerLogin, TextInputsLogin, TextInputsCadastro, ButtonActLogin, TextsLogin,
         } from "../../styles/styles";
 
@@ -17,15 +17,15 @@ export default function Login() {
   const {signUp, signIn, signInClient, signUpClient, loading}= useContext(AuthContext);
   
   //FAZ CADASTRO OU LOGIN A PARTIR DO TYPE
- function HandleSigInOrSignUpClient(){    
-    if(type==='Login'){
-      return(
-        signInClient(email, password)
-      )
-    }else{
-        signUpClient(email, password, name)
-    }
-  };
+//  function HandleSigInOrSignUpClient(){    
+//     if(type==='Login'){
+//       return(
+//         signInClient(email, password)
+//       )
+//     }else{
+//         signUpClient(email, password, name)
+//     }
+//   };
 
   function HandleSigInOrSignUpEstab(){    
     if(type==='Login'){
@@ -44,26 +44,28 @@ export default function Login() {
     }else{
       return (
             <View style={{width:'80%', marginBottom:5}}>
-              <TextsLogin>Nome:</TextsLogin>
+              {/* <Text >Nome:</Text> */}
               <TextInputsCadastro
               onChangeText={text=>setName(text)}
               value={name}
               placeholder="Nome"
+              placeholderTextColor="#2D2D2D"
+              selectionColor={'#696969'}
               // keyboardType="numeric"
               />
-              <TouchableOpacity onPress={()=>setImEstab(imEstab=>imEstab===null?'imEstab':null)} style={{ alignItems:'center', flexDirection:'row'}} >
+              {/* <TouchableOpacity onPress={()=>setImEstab(imEstab=>imEstab===null?'imEstab':null)} style={{ alignItems:'center', flexDirection:'row'}} >
                 <View style={{margin:10, width:28, height:28,backgroundColor:imEstab===null?'#FFF':'#FFA500', 
                 borderRadius:25, borderWidth:5, borderColor:'#F2F2F2'}}>
                 </View>
                 <TextsLogin style={{color:imEstab===null?'#FFF':'#FFA500'}}>ME CADASTRAR COMO LOJISTA</TextsLogin>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
       )}}
 
  return (
    <ContainerLogin>
     
-    <Image source={require('../../Img/LogoPNG.png')} 
+    <Image source={require('../../Img/LogoBlackPNG.png')} 
             style={{width:'70%', height:100, resizeMode:'contain', marginBottom:'13%'}}/>
 
     {/* <TextsTitleLogin>{type} Loveclient</TextsTitleLogin> */}
@@ -75,7 +77,7 @@ export default function Login() {
     onChangeText={text=>setEmail(text)}
     value={email}
     placeholder="E-mail"
-    placeholderTextColor="#696969"
+    placeholderTextColor="#2D2D2D"
     selectionColor={'#696969'}
     />
 
@@ -86,24 +88,24 @@ export default function Login() {
     onChangeText={text=>setPassword(text)}
     value={password}
     placeholder="Senha"
-    placeholderTextColor="#696969"
+    placeholderTextColor="#2D2D2D"
     secureTextEntry={true}
     selectionColor={'#696969'}
     />
-    <ButtonActLogin onPress={imEstab===null ? HandleSigInOrSignUpClient : HandleSigInOrSignUpEstab}>
+    <ButtonActLogin onPress={()=>{HandleSigInOrSignUpEstab()}}>
       {
         loading?(
           <ActivityIndicator size={20} color={"#FFF"}/>
         ) : (
-          <TextsLogin style={{color:"#FFF", }}>
+          <Text style={{fontFamily:'OxaniumSemiBold', color:'#FFF', fontSize:15}}>
             {type === 'Login' ? 'Acessar' : 'Cadastrar'}
-          </TextsLogin>
+          </Text>
         )
       }
     </ButtonActLogin>
 
     <TouchableOpacity onPress={()=>setType(type=>type==='Login' ? 'Cadastro' : 'Login')} style={{margin:20}}>
-      <TextsLogin>{type === 'Login' ? 'Cadastrar-se' : 'Já possuo uma conta'}</TextsLogin>
+      <Text style={{fontFamily:'OxaniumSemiBold',fontSize:15}}>{type === 'Login' ? 'Cadastrar-se' : 'Já possuo uma conta'}</Text>
     </TouchableOpacity>
 
    </ContainerLogin>

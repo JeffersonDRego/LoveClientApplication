@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useContext} from "react";
-import { Text, TouchableOpacity, ScrollView, ActivityIndicator,Alert, Image, View, } from "react-native";
+import { Text, TouchableWithoutFeedback, TouchableOpacity, Keyboard, ActivityIndicator,Alert, Image, View, } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import firebase from "../../services/firebaseConnection";
 import { AuthContext } from "../../contexts/auth";
 import IonIcons from  'react-native-vector-icons/Ionicons';
 
-import {SafeArea, SearchListaClientes, ContainerHeaderList, ContainerListScreen, ListaClientes, TextsLogin, TextInputs, 
+import {SafeArea, SearchListaClientes, ContainerHeader, ContainerListScreen, ListaClientes, TextsLogin, TextInputs, 
   ButtonActListScreen} from '../../styles/styles';
 // import MaskInput, { Masks } from 'react-native-mask-input';
 import ClientsList from "../../components/ListComponents/ClientsList";
@@ -77,8 +77,8 @@ export default function ListPageScreen(props) {
   }
   const msgListEmpty=()=>{
     return(
-      <View style={{height:60, alignItems:'center', justifyContent:'center'}}>
-        <Text style={{fontSize:15}}>O resultado da sua busca aparecerá aqui</Text>
+      <View style={{height:60, alignItems:'center', justifyContent:'center', }}>
+        <Text style={{fontSize:15, fontFamily:'OxaniumSemiBold'}}>O resultado da sua busca aparecerá aqui</Text>
 
       </View>
     )
@@ -93,105 +93,101 @@ export default function ListPageScreen(props) {
     setListClients(newList);
   }
   
-  
   return (
-    <View style={{flex:1,}}>
+    // <ScrollView contentContainerStyle={{flexGrow: 1}} style={{flex:1, backgroundColor:'red'}}>
 
-      <ContainerHeaderList >
-        <Image source={require('../../Img/LogoPNG.png')} 
-        style={{width:'60%', height:100, resizeMode:'contain', marginBottom:'-10%', marginLeft:'2%'}}/>
-        <View style={{marginTop:20}}>
-            <TouchableOpacity onPress={()=>{}}>
-              <IonIcons style={{marginRight:10, marginBottom:-15}} name={'list-outline'} size={60} color={'#FFA500'}/>
-            </TouchableOpacity>
-          </View>
-      </ContainerHeaderList>
+    <View style={{flex:1,}}>
+      <Image source={require('../../Img/BackgroundApp.png')} 
+              style={{width:'100%', height:'100%', position:"absolute"}}/>
+      <ContainerHeader >
+        <Image source={require('../../Img/LogoBlackPNG.png')} 
+                style={{width:210, height:60, resizeMode:'contain', alignSelf:'flex-end'}}/>
+      </ContainerHeader>
+      <View style={{height:3, backgroundColor:'#0D0D0D'}}></View>
 
       {/* <View style={{width:'100%', height:7, backgroundColor:'#BFB47A'}}> */}
       {/* </View> */}
       <View style={{width:'100%', height:2, backgroundColor:'#FFF'}}>
       </View>
+      <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
 
-      <ContainerListScreen>
-        
-        {/* <TouchableOpacity onPress={()=>{}}>
-          <TextsLogin>ASOSAOKSAOKOSAK</TextsLogin>
-        </TouchableOpacity> */}
-        <View style={{minHeight:150,maxHeight:300, justifyContent:'center', alignItems:'center', width:'100%', 
-        marginTop:'5%', marginBottom:'5%'}}>
-          <TextsLogin style={{fontWeight:'bold'}}>PESQUISAR CLIENTE:</TextsLogin>
-          {/* <ButtonActListScreen onPress={()=>setShowList(showList=>showList==='unShow' ? 'Show' : 'unShow')}>
-            <Text>alo</Text>
-          </ButtonActListScreen> */}
-          <View style={{flexDirection:"row", alignItems:'center' }}>
-            <TextInputs
-            style={{width:'90%'}}
-            onChangeText={(text) =>filteredData===['']? setFilteredData([]): searchFilter(text)}
-            value={search}
-            placeholder="Digite o número ou nome do Cliente" 
-            placeholderTextColor="#696969"
-            selectionColor={'#696969'}
-            />
-            <TouchableOpacity style={{marginLeft:-38}} onPress={()=>{
-              setFilteredData([])
-              setSearch('')
-              }}>
-              <IonIcons  name="close-outline" size={23} color={'#0D0D0D'}/>
-            </TouchableOpacity>
-          </View>
-
-          <SearchListaClientes style={{marginBottom:0}}
-            data={filteredData}
-            keyExtractor={item => item.key}
-            ListEmptyComponent={msgListEmpty()}
-            renderItem={({item})=> (
-              loading?(
-                <ActivityIndicator size={20} color={"#FFF"} style={{marginTop:20,marginBottom:60}}/>
-              ):(
-                <ClientsListFiltered zerarLista={setFilteredToEmpty} data={item}/>
-                )
-            )}
-          />
-          
-        </View>
-
-        <View style={{width:'100%', borderStyle:'dashed', borderColor:'#AAA', borderWidth:1,  borderRadius:1, marginBottom:10, marginTop:10}}>
-        </View>
-
-        <View style={{ width:'100%', height:300,marginTop:20
-        , borderRadius:10, backgroundColor:'#223A40'}}>
-          <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between', padding:6}}>
-
-            <TextsLogin style={{marginLeft:10, fontWeight:'bold'}} >CLIENTES CADASTRADOS:</TextsLogin>
-
-            <TouchableOpacity 
-            onPress={handleOrderedFilter}
-            style={{ alignItems:'center', justifyContent:'space-between', padding:4}}>
-              <IonIcons style={{marginBottom:-6}} name="list-outline" size={30} color={'#FFF'} />
-              <TextsLogin style={{fontSize:13}}>Abc</TextsLogin>
-            </TouchableOpacity>
-          </View>
-          {
-            user.clients==0
-            ?
-            <View style={{width:'100%', alignItems:'center', backgroundColor:'red', marginTop:15}}>
-              <Text style={{color:'#FFF', fontSize:15, fontWeight:'bold'}}>Você não possui clientes cadastrados</Text>
+        <ContainerListScreen>
+  
+          <View style={{minHeight:150,maxHeight:300, justifyContent:'center', alignItems:'center', width:'100%', 
+          marginTop:'5%', marginBottom:'5%'}}>
+            <TextsLogin style={{ fontFamily:'OxaniumSemiBold'}}>PESQUISAR CLIENTE:</TextsLogin>
+            <View style={{flexDirection:"row", alignItems:'center' }}>
+              <TextInputs
+              style={{width:'90%'}}
+              onChangeText={(text) =>filteredData===['']? setFilteredData([]): searchFilter(text)}
+              value={search}
+              placeholder="Digite o número ou nome do Cliente" 
+              placeholderTextColor="#696969"
+              selectionColor={'#696969'}
+              />
+              <TouchableOpacity style={{marginLeft:-38}} onPress={()=>{
+                setFilteredData([])
+                setSearch('')
+                }}>
+                <IonIcons  name="close-outline" size={23} color={'#0D0D0D'}/>
+              </TouchableOpacity>
             </View>
-            :
-            <ListaClientes style={{marginBottom:0}}
-              data={listClients}
+
+            <SearchListaClientes style={{marginBottom:0}}
+              data={filteredData}
               keyExtractor={item => item.key}
+              ListEmptyComponent={msgListEmpty()}
               renderItem={({item})=> (
                 loading?(
-                  <ActivityIndicator size={20} color={"#FFF"} style={{marginTop:30,marginBottom:35}}/>
+                  <ActivityIndicator size={20} color={"#FFF"} style={{marginTop:20,marginBottom:60}}/>
                 ):(
-                  <ClientsList data={item}/>
+                  <ClientsListFiltered zerarLista={setFilteredToEmpty} data={item}/>
                   )
               )}
             />
-          }
-        </View>        
-      </ContainerListScreen>
+            
+          </View>
+
+          <View style={{width:'100%', borderStyle:'dashed', borderColor:'#AAA', borderWidth:0.5,  borderRadius:1, marginBottom:10, marginTop:10}}>
+          </View>
+
+          <View style={{ width:'100%', height:400,marginTop:20
+          , borderRadius:10, backgroundColor:'#FFA500', padding:10, paddingRight:15}}>
+            <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between', padding:6}}>
+
+              <TextsLogin style={{marginLeft:10, fontFamily:'OxaniumBold', color:'#FFF', fontSize:20}} >CLIENTES CADASTRADOS:</TextsLogin>
+                  {/* -----------------------BOTÃO ORDEM ALFABÉTICA-------------------- */}
+              <TouchableOpacity 
+              onPress={handleOrderedFilter}
+              style={{ alignItems:'center', justifyContent:'space-between', padding:4}}>
+                <IonIcons style={{marginBottom:-6}} name="list-outline" size={30} color={'#FFF'} />
+                <TextsLogin style={{fontSize:13, fontFamily:'OxaniumBold', color:'#FFF'}}>ABC</TextsLogin>
+              </TouchableOpacity>
+            </View>
+            {
+              user.clients==0
+              ?
+              <View style={{width:'100%', alignItems:'center', backgroundColor:'red', marginTop:15}}>
+                <Text style={{color:'#FFF', fontSize:15, fontWeight:'bold'}}>Você não possui clientes cadastrados</Text>
+              </View>
+              :
+              <ListaClientes style={{marginBottom:0}}
+                data={listClients}
+                keyExtractor={item => item.key}
+                renderItem={({item})=> (
+                  loading?(
+                    <ActivityIndicator size={20} color={"#FFF"} style={{marginTop:30,marginBottom:35}}/>
+                  ):(
+                    <ClientsList data={item}/>
+                    )
+                )}
+              />
+            }
+          </View>        
+        </ContainerListScreen>
+      </TouchableWithoutFeedback>
     </View>
+    // </ScrollView>
+
   );
 }

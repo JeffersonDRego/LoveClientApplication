@@ -6,7 +6,7 @@ import { AuthContext } from "../../contexts/auth";
 import IonIcons from "react-native-vector-icons/Ionicons";
 
 
-import {ContainerHeaderHome, TextsLogin, ListaClientes, ContainerHome} from '../../styles/styles';
+import {ContainerHeader, TextsLogin, ListaClientes, ContainerHome} from '../../styles/styles';
 import moment from 'moment';
 
 import ClientsListWarnings from "../../components/ListComponents/ClientsListWarnings";
@@ -56,40 +56,32 @@ export default function Warning({data}) {
     // await new Promise(resolve=> setTimeout(resolve, 300))
 
   }
-  ///////////////////IMPORTANTE////////////////////////////////
-          // let dataAtual = new moment();
-          // let primeiraCompra = new moment()
-          // let primeiraCompraFormated = primeiraCompra.format('DD/MM/YYYY')
-          // var diff = moment(dataAtual,"DD/MM/YYYY").diff(moment(primeiraCompra,"DD/MM/YYYY"));
-          // var meses = moment.duration(diff).asMonths();
 
   return (
       <View style={{flex:1}}>
-        <ContainerHeaderHome>
-          <Image source={require('../../Img/LogoPNG.png')} 
-              style={{width:'60%', height:100, resizeMode:'contain', marginBottom:'-10%', marginLeft:'2%'}}/>
-          
-          <View style={{marginTop:20}}>
-            <TouchableOpacity onPress={()=>{}}>
-              <IonIcons style={{marginRight:10, marginBottom:-15}} name={'alert-circle-outline'} size={60} color={'#FFA500'}/>
-            </TouchableOpacity>
-          </View>
-        </ContainerHeaderHome>
+        <Image source={require('../../Img/BackgroundApp.png')} 
+              style={{width:'100%', height:'100%', position:"absolute"}}/>
+        <ContainerHeader>
+        <Image source={require('../../Img/LogoBlackPNG.png')} 
+              style={{width:210, height:60, resizeMode:'contain', alignSelf:'flex-end'}}/>
+        </ContainerHeader>
+        <View style={{height:3, backgroundColor:'#0D0D0D'}}></View>
 
-        <View style={{width:'100%', height:1, backgroundColor:'#F2F2F2'}}>
-        </View>
+        <View style={{padding:20, paddingTop:35 }}>
 
-        <ContainerHome>
-        <View style={{ width:'100%', height:'70%',marginTop:20
-          , borderRadius:10, backgroundColor:'#223A40'}}>
-            {
+          <Text style={{fontFamily:'OxaniumSemiBold', fontSize:30, marginBottom:5}}>Notificações</Text>
+          <Text style={{fontFamily:'OxaniumLight', fontSize:15, marginBottom:15, borderBottomWidth:0.5,}}>Acompanhe o status dos seus clientes e faça contato!</Text>
+
+          <View style={{ width:'100%', height:'70%',marginTop:20
+            , borderRadius:10, backgroundColor:'#FFA500', padding:10, paddingRight:15,}}>
+              {
               listClientsWarnings.length==0
               ?
               <View style={{width:'100%', alignItems:'center', backgroundColor:'red', marginTop:15}}>
                 <Text style={{color:'#FFF', fontSize:15, fontWeight:'bold'}}>NENHUM AVISO POR ENQUANTO</Text>
               </View>
               :
-              <ListaClientes style={{marginBottom:0}}
+              <ListaClientes
                 data={listClientsWarnings}
                 keyExtractor={item => item.key}
                 renderItem={({item})=> (
@@ -102,12 +94,13 @@ export default function Warning({data}) {
               />
             }
           </View>
-          {/* ------------------------------BOTAOO TESTE-------------------------------- */}
-          <TouchableOpacity onPress={()=>{loadListClientsWarnings()}}>
-            <TextsLogin>ATUALIZAR LISTA</TextsLogin>
+          {/* ------------------------------BOTAOO ATUALIZAR LISTA-------------------------------- */}
+          <TouchableOpacity onPress={()=>{loadListClientsWarnings()}}
+          style={{margin:10, backgroundColor:'#FAA500', padding:12, borderRadius:3, alignSelf:'center', width:'40%'}}>
+            <Text style={{fontFamily:'OxaniumSemiBold', textAlign:'center'}}>ATUALIZAR LISTA</Text>
           </TouchableOpacity>
 
-        </ContainerHome>
+        </View>
       </View>
   );
 }

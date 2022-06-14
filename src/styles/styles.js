@@ -2,19 +2,23 @@ import styled from 'styled-components/native';
 
 export const SafeArea = styled.SafeAreaView`
 flex:1;
-/* background-color: #0D0D0D; */
-/* padding:1px;
-border-width: 2px;
-border-color: red; */
 `
-
+export const ContainerHeader = styled.View`
+flex-direction:row;
+justify-content: center;
+/* align-items: center; */
+background-color: #FFA500;
+width: 100%;
+height: 95px;
+padding: 2px;
+`
 //---------------------------------------------------LOGIN
 
 export const ContainerLogin = styled.View`
 flex:1;
 justify-content: center;
 align-items: center;
-background-color: #112426	;
+background-color: #FFA500	;
 `
 // export const TextsTitleLogin = styled.Text`
 
@@ -26,28 +30,32 @@ background-color: #112426	;
 export const TextInputsLogin = styled.TextInput`
 width:80%;
 height:40px;
-background-Color:#F2F2F2;
+/* background-Color:#F2F2F2; */
+border-bottom-width: 0.5px;
 border-Radius:5px;
 padding:5px;
 margin:10px;
+font-family: 'OxaniumLight';
 font-size: 17px;
 /* elevation:2; */
 `
 export const TextInputsCadastro = styled.TextInput`
 width:100%;
 height:40px;
-background-Color:#F2F2F2;
+/* background-Color:#F2F2F2; */
+border-bottom-width: 0.5px;
 border-Radius:5px;
+padding:5px;
+/* margin:10px; */
+font-family: 'OxaniumLight';
 font-size: 17px;
-padding: 5px;
 /* elevation:2; */
-/* margin-bottom: 5px; */
 `
 export const  ButtonActLogin = styled.TouchableOpacity`
 margin-top: 10px;
 width:110px;
 height:40px;
-background-Color:#2A5959;
+background-Color:#2D2D2D;
 border-Radius:4px;
 justify-Content:center;
 align-Items:center;
@@ -56,38 +64,31 @@ align-Items:center;
 `
 
 export const TextsLogin = styled.Text`
-color: #F2F2F2;
+color: #0D0D0D;
 font-size: 18px;
 `
 
 //--------------------------------------------------HOME SCREEN
 
-export const ContainerHeaderHome = styled.View`
-/* flex:1; */
-flex-direction:row;
-justify-content: space-between;
-align-items: center;
-background-color: #2A5959;
-width: 100%;
-height: 130px;
-padding: 10px;
-/* margin-top: 35px; */
-`
 export const ContainerHome = styled.View`
 flex:1;
-justify-content: center;
-align-items: center;
-background-color: #112426;
-padding: 12px;
+/* height: 100%; */
+/* justify-content: space-evenly; */
+/* align-items: center; */
+padding: 20px;
+padding-top: 40px;
+position: relative;
 `
 export const TextInputs = styled.TextInput`
 width:80%;
-height:40px;
-background-Color:#DCDCDC;
+/* height:40px; */
+/* background-Color:#DCDCDC; */
 border-Radius:5px;
+border-Bottom-Width: 0.5px;
 padding:5px;
 margin:10px;
 font-size: 17px;
+font-family: 'OxaniumExtraLight';
 `
 export const  ButtonAct = styled.TouchableOpacity`
 width:90px;
@@ -100,25 +101,15 @@ align-Items:center;
 `
 //-----------------------------------------------------LIST SCREEN
 
-export const ContainerHeaderList = styled.View`
-/* flex:1; */
-flex-direction:row;
-justify-content: space-between;
-align-items: center;
-background-color: #2A5959;
-width: 100%;
-height: 130px;
-padding: 10px;
-/* margin-top: 35px; */
-`
+
 export const ContainerListScreen = styled.View`
 flex:1;
 /* height: 100%; */
 /* flex-direction:column; */
 /* justify-content: center; */
 align-items: center;
-background-color: #112426;
-padding: 12px;
+/* background-color: #F2f2f2; */
+padding: 15px;
 `
 export const ViewList = styled.View`
 margin-Bottom:50px;
@@ -157,38 +148,40 @@ align-Items:center;
 
 //-------------------------------------COMPONENT CLIENTLIST
 export const ContainerList = styled.View`
-/* background-color: #AAAAAA; */
+background-color: #FFF;
 padding: 5px;
 /* height: 50%; */
 `
 export const ViewClient = styled.View`
-background-color: #2A5959;
+/* background-color: #FFF; */
 flex-direction:row;
 justify-content: space-between;
 align-items: center;
 border-radius: 10px;
+/* border-width: 1; */
 padding: 8px;
 margin-top: 6px;
 width: 98%;
 `
 export const InfosView = styled.View`
-/* padding: 0px; */
+/* margin-bottom: 15px; */
 justify-content: space-between;
-width: 70%;
-
+flex-direction: row;
+width: 100%;
 `
 export const ButtonsView = styled.View`
-background-color: #1212;
+background-color: #FFA500;
 flex-direction: column;
 padding: 3px;
 justify-content: space-between;
 width: 17%;
+align-items: center;
 border-radius: 5px;
 /* height: 100%; */
 
 `
 export const TextName = styled.Text`
-color: #FFF;
+color: #0D0D0D;
 font-size: 18px;
 margin-left: 3px;
 `
@@ -202,45 +195,15 @@ border-radius: 5px;
 
 
 //--------------------------------------------------------------CONFIGS SCREEN
-export const ContainerHeaderConfigs = styled.View`
-/* flex:1; */
-flex-direction:row;
-justify-content: space-between;
-align-items: center;
-background-color: #2A5959;
-width: 100%;
-height: 130px;
-padding: 10px;
-/* margin-top: 35px; */
-`
+
 export const ContainerConfigsScreen = styled.View`
 flex:1;
-/* height: 100%; */
-/* flex-direction:column; */
-/* justify-content: center; */
-/* align-items: center; */
-background-color: #112426;
-padding: 12px;
+padding: 15px;
 `
 //--------------------------------------------------------------EDIT SCREEN
-export const ContainerHeaderEditScreen = styled.View`
-/* flex:1; */
-flex-direction:row;
-justify-content: space-between;
-align-items: center;
-background-color: #2A5959;
-width: 100%;
-height: 130px;
-padding: 10px;
-/* margin-top: 35px; */
-`
+
 export const ContainerEditScreen = styled.View`
 flex:1;
-/* height: 100%; */
-/* flex-direction:column; */
-/* justify-content: center; */
-align-items: center;
-background-color: #112426;
-padding: 12px;
+padding: 15px;
 `
 //-------------------------------------COMPONENT EDIT CLIENT

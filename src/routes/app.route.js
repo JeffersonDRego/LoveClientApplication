@@ -68,16 +68,17 @@ export default function AppRoute(){
             tabBarShowLabel: false,
             tabBarActiveTintColor:'#F2F2F2',
             tabBarInactiveTintColor:'#252525',
-            tabBarActiveBackgroundColor:'#2A5959',
-            tabBarInactiveBackgroundColor:'#404040',
+            tabBarActiveBackgroundColor:'#FFA500',
+            tabBarInactiveBackgroundColor:'#FFF',
             
             tabBarStyle:{
-                backgroundColor:'#112426',
-                borderTopWidth:0,
+                backgroundColor:'#F2F2F2',
+                // borderTopWidth:0,
                 // borderBottomWidth:5,
                 // borderTopColor:'black',
                 // borderBottomColor:'#A61F1F',
-                height: Platform.OS === 'ios' ? 90 : 70,  
+                height: Platform.OS === 'ios' ? 80 : 60,  
+                // elevation:2
             },
             tabBarLabelStyle:{
                 fontWeight:"bold",
@@ -98,34 +99,22 @@ export default function AppRoute(){
             options={{
                 // headerShown:false,
                 tabBarLabel: 'PAGINA INICIAL',
-                tabBarShowLabel:true,
+                tabBarShowLabel:false,
                 tabBarIcon:({color, size}) => {
                     return <IonIcons name="home-outline" color={color} size={30}></IonIcons>
                 }
             }}
             />
-            <Tab.Screen
-            name="ListScreen"
-            component={ListStack}
-            options={{
-                // headerShown:true, 
-                tabBarLabel: 'LISTA CLIENTES',
-                tabBarShowLabel:true,
-                tabBarIcon:({color, size}) => {
-                    return <IonIcons name="list" color={color} size={30}></IonIcons>
-                }
-            }}
-            />
 
             <Tab.Screen
-            name="WarningScreen"
+            name="WarningsScreen"
             component={Warning}
             options={{
                 // headerShown:true, 
-                tabBarLabel: 'AVISOS',
-                tabBarShowLabel:true,
+                tabBarLabel: 'RESGATES',
+                tabBarShowLabel:false,
                 tabBarBadge: listLength,
-                tabBarBadgeStyle:{backgroundColor:'#FFA500'},
+                tabBarBadgeStyle:{ backgroundColor:'#FF8C00', color:'#FFF'},
                 tabBarIcon:({color, size}) => {
                     return <IonIcons name="notifications-outline" color={color} size={30}></IonIcons>
                 }
@@ -134,12 +123,24 @@ export default function AppRoute(){
             />  
 
             <Tab.Screen
+            name="ListScreen"
+            component={ListStack}
+            options={{
+                // headerShown:true, 
+                tabBarLabel: 'LISTA CLIENTES',
+                tabBarShowLabel:false,
+                tabBarIcon:({color, size}) => {
+                    return <IonIcons name="list" color={color} size={30}></IonIcons>
+                }
+            }}
+            />
+            <Tab.Screen
             name="ConfigsScreen"
             component={ConfigsStack}
             options={{
                 // headerShown:true, 
                 tabBarLabel: 'AJUSTES',
-                tabBarShowLabel:true,
+                tabBarShowLabel:false,
                 tabBarIcon:({color, size}) => {
                     return <IonIcons name="settings-outline" color={color} size={30}></IonIcons>
                 }
@@ -156,7 +157,7 @@ export default function AppRoute(){
                         <View style={{width:0, height:0}}></View>
                     ),
                 tabBarLabel: 'EDITAR CLIENTE',
-                tabBarShowLabel:true,
+                tabBarShowLabel:false,
                 tabBarIcon:({color, size}) => {
                     return <IonIcons name="settings-outline" color={color} size={30}></IonIcons>
                 }

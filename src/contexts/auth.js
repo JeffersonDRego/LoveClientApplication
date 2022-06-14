@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firebase from "../services/firebaseConnection";
 
+import { useFonts } from 'expo-font';
 
 export const AuthContext = createContext({});
 
@@ -10,9 +11,15 @@ function AuthProvider({children}){
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [numberClients, setNumberClients] = useState(0);
-    // const [celClient, setcelClient] = useState(null);
-    // const [configurated, setConfigurated] = useState('noConfigurated');
 
+    const [loaded] = useFonts({
+        Bringshoot: require('../../assets/fonts/Bringshoot.ttf'),
+        OxaniumBold: require('../../assets/fonts/Oxanium-Bold.ttf'),
+        OxaniumSemiBold: require('../../assets/fonts/Oxanium-SemiBold.ttf'),
+        OxaniumLight: require('../../assets/fonts/Oxanium-Light.ttf'),
+        OxaniumExtraLight: require('../../assets/fonts/Oxanium-ExtraLight.ttf'),
+        OxaniumMedium: require('../../assets/fonts/Oxanium-Medium.ttf'),
+      });
 
     useEffect(()=>{
         loadStoragedUser();
@@ -36,9 +43,7 @@ function AuthProvider({children}){
             setLoading(false)
 
         }
-    }
-
-  
+    }  
     // SIGNIN CLIENTE
     async function signInClient(email, password){
         setLoading(true)
@@ -161,6 +166,15 @@ function AuthProvider({children}){
 
         await AsyncStorage.clear().then(setUser(null))
         console.log(user)
+    }
+    
+    //PROVIDE FONTS
+    async function LoadFonts(){
+
+    }
+    
+    if (!loaded) {
+        return null;
     }
     
     return(
