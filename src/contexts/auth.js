@@ -11,7 +11,8 @@ function AuthProvider({children}){
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [numberClients, setNumberClients] = useState(0);
-
+   
+    //PROVIDE FONTS
     const [loaded] = useFonts({
         Bringshoot: require('../../assets/fonts/Bringshoot.ttf'),
         OxaniumBold: require('../../assets/fonts/Oxanium-Bold.ttf'),
@@ -167,11 +168,7 @@ function AuthProvider({children}){
         await AsyncStorage.clear().then(setUser(null))
         console.log(user)
     }
-    
-    //PROVIDE FONTS
-    async function LoadFonts(){
 
-    }
     
     if (!loaded) {
         return null;

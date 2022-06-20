@@ -13,19 +13,9 @@ export default function Login() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [imEstab, setImEstab] = useState(null);
-  const {signUp, signIn, signInClient, signUpClient, loading}= useContext(AuthContext);
+  const {signUp, signIn, loading}= useContext(AuthContext);
   
-  //FAZ CADASTRO OU LOGIN A PARTIR DO TYPE
-//  function HandleSigInOrSignUpClient(){    
-//     if(type==='Login'){
-//       return(
-//         signInClient(email, password)
-//       )
-//     }else{
-//         signUpClient(email, password, name)
-//     }
-//   };
+
 
   function HandleSigInOrSignUpEstab(){    
     if(type==='Login'){
@@ -51,14 +41,8 @@ export default function Login() {
               placeholder="Nome"
               placeholderTextColor="#2D2D2D"
               selectionColor={'#696969'}
-              // keyboardType="numeric"
               />
-              {/* <TouchableOpacity onPress={()=>setImEstab(imEstab=>imEstab===null?'imEstab':null)} style={{ alignItems:'center', flexDirection:'row'}} >
-                <View style={{margin:10, width:28, height:28,backgroundColor:imEstab===null?'#FFF':'#FFA500', 
-                borderRadius:25, borderWidth:5, borderColor:'#F2F2F2'}}>
-                </View>
-                <TextsLogin style={{color:imEstab===null?'#FFF':'#FFA500'}}>ME CADASTRAR COMO LOJISTA</TextsLogin>
-              </TouchableOpacity> */}
+  
             </View>
       )}}
 
@@ -68,11 +52,7 @@ export default function Login() {
     <Image source={require('../../Img/LogoBlackPNG.png')} 
             style={{width:'70%', height:100, resizeMode:'contain', marginBottom:'13%'}}/>
 
-    {/* <TextsTitleLogin>{type} Loveclient</TextsTitleLogin> */}
     {TextInputName()}
-    {/* <View style={{width:'80%', marginBottom:-5}}>
-      <TextsLogin>E-mail:</TextsLogin>
-    </View> */}
     <TextInputsLogin
     onChangeText={text=>setEmail(text)}
     value={email}
@@ -81,9 +61,6 @@ export default function Login() {
     selectionColor={'#696969'}
     />
 
-    {/* <View style={{width:'80%', marginBottom:-5}}>
-      <TextsLogin>Senha:</TextsLogin>
-    </View> */}
     <TextInputsLogin
     onChangeText={text=>setPassword(text)}
     value={password}

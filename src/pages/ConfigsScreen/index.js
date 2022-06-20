@@ -74,6 +74,19 @@ export default function ConfigsPageScreen() {
     }
   }
   //SALVANDO NO BANCO DE DADOS E NO ASYNCSTORAGE
+  function handleSetNoConfigurated(){
+    Alert.alert("Atenção", 'Ao redefinir as configurações, todos os clientes serão afetados. Os carimbos serão mantidos e adaptados às novas configurações',
+     [
+      {
+        text:'CANCELAR',
+        style: 'cancel'
+      },
+      {
+        text:'CONTINUAR',
+        onPress: ()=> handleForm()
+      }
+     ])
+  }
   async function handleForm(){
     
     if(numTotalCarimbos == null || numTotalCarimbos == ''){
@@ -163,7 +176,7 @@ export default function ConfigsPageScreen() {
           </TouchableOpacity>
         </View>
           <TouchableOpacity 
-          onPress={()=>{handleForm()}}
+          onPress={()=>{handleSetNoConfigurated()}}
           style={{elevation:5, flexDirection:'row',backgroundColor:'#FFA500', alignItems:'center',alignSelf:'center', marginTop:30, padding:10, borderRadius:3}}>
             <Text style={{fontFamily:'OxaniumSemiBold', marginRight:8}}>SALVAR CONFIGURAÇÕES</Text>
             {
@@ -250,7 +263,7 @@ export default function ConfigsPageScreen() {
         </View>
         
         <TouchableOpacity 
-        onPress={()=>{handleForm()}}
+        onPress={()=>{handleSetNoConfigurated()}}
         style={{elevation:5, flexDirection:'row',backgroundColor:'#FFA500', alignItems:'center',alignSelf:'center', margin:10, padding:10, borderRadius:3}}>
           <Text style={{fontFamily:'OxaniumSemiBold', marginRight:8}}>Salvar Configurações</Text>
           {

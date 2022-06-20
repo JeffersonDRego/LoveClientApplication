@@ -84,6 +84,7 @@ export default function Warning({data}) {
               <ListaClientes
                 data={listClientsWarnings}
                 keyExtractor={item => item.key}
+                initialNumToRender={5}
                 renderItem={({item})=> (
                   loading?(
                     <ActivityIndicator size={20} color={"#FFF"} style={{marginTop:30,marginBottom:35}}/>

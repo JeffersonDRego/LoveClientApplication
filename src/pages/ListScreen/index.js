@@ -137,6 +137,7 @@ export default function ListPageScreen(props) {
               data={filteredData}
               keyExtractor={item => item.key}
               ListEmptyComponent={msgListEmpty()}
+              initialNumToRender={5}
               renderItem={({item})=> (
                 loading?(
                   <ActivityIndicator size={20} color={"#FFF"} style={{marginTop:20,marginBottom:60}}/>

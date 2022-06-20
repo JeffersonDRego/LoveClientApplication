@@ -1,7 +1,7 @@
 import React, {useContext, useState, useRef, useEffect} from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator, StyleSheet, Image} from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator, StyleSheet, Image, Linking} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { ButtonAct, SafeArea, ContainerEditScreen, TextsLogin, IconView, ContainerHeader, TextInputs } from '../../styles/styles';
+import {ContainerEditScreen, TextsLogin, ContainerHeader, TextInputs} from '../../styles/styles';
 import { AuthContext } from "../../contexts/auth";
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import MaskInput, {Masks} from 'react-native-mask-input';
@@ -120,6 +120,7 @@ export default function EditClient({route}) {
          purchases: route.params.data.purchases + 1,
          firstPurchase: today
         })
+        alert('CARIMBO CADASTRADO COM SUCESSO')
         setLoading(false)
         navigation.navigate('ListScreen')
         if(user.valorMin!=='sem'){
@@ -130,6 +131,7 @@ export default function EditClient({route}) {
        await firebase.database().ref('clients').child(uid).child(route.params.data.key).update({
          purchases: route.params.data.purchases + 1
        })
+       alert('CARIMBO CADASTRADO COM SUCESSO')
        setLoading(false)
        navigation.navigate('ListScreen')
        if(user.valorMin!=='sem'){
@@ -223,13 +225,13 @@ export default function EditClient({route}) {
         [
           {
             text:'Cancelar',
-            style: 'cancel'
+            style: 'cancel' ,
           },
           {
             text:'Confirmar',
             onPress: ()=> {
+              setLoading(true)
               handleDeleteClientSuccess(route.params.data);
-              navigation.navigate('ListPageScreen');
             }
           }
         ]
@@ -246,8 +248,8 @@ export default function EditClient({route}) {
         {
           text:'Confirmar',
           onPress: ()=> {
+            setLoading(true)
             handleDeleteClientSuccess(route.params.data);
-            navigation.navigate('ListPageScreen');
           }
         }
       ]
@@ -277,6 +279,7 @@ export default function EditClient({route}) {
       setConfirmAdminPass(null);
       setShowConfirmAdminPass('no');
       alert('CLIENTE EXLUÍDO');
+      navigation.navigate('ListPageScreen');
       loadStoragedUser();
       setLoading(false)
 

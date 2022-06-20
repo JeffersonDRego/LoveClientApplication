@@ -1,31 +1,58 @@
-import React, {useState, useContext,} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import { Text, ActivityIndicator, Keyboard, StyleSheet ,Alert, TouchableOpacity, Image, View, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import firebase from "../../services/firebaseConnection";
 import { AuthContext } from "../../contexts/auth";
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from "moment";
-// import { useFonts } from 'expo-font';
-// import { AppLoading } from 'expo';
 import IonIcons from "react-native-vector-icons/Ionicons";
 
-import {ContainerHeader, ContainerHome, ButtonAct, TextInputs, TextsLogin, SafeArea, ListaClientes} from '../../styles/styles';
+import {ContainerHeader, ContainerHome, TextInputs,} from '../../styles/styles';
 import MaskInput, {Masks} from 'react-native-mask-input';
 
 export default function Home({data}) {
-    
+  
   const navigation = useNavigation();
   
-  const {user, Logout, storageUser, loadStoragedUser,} = useContext(AuthContext);
+  const {user, storageUser, loadStoragedUser,} = useContext(AuthContext);
 
   const [nameClient, setNameClient] = useState(null);
   const [phoneClient, setPhoneClient] = useState('');
   const [purchases, setPurchases] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [listClients, setListClients] = useState([]);
+  let uid = user.uid;
 
+  useEffect(()=> {
+    async function loadListClients(){
+      setLoading(true);
+      firebase.database().ref('clients').child(uid).on('value', (snapshot) => {
+        setListClients([]);
+        snapshot.forEach((childItem) => {
+          let list = {
+            key: childItem.key,
+            nameClient: childItem.val().nameClient,
+            phoneClient: childItem.val().phoneClient,
+          };
+          setListClients(oldArray => [...oldArray, list].reverse());
+        });
+      })
+      setLoading(false)
+    }
+    loadListClients();
+  },[]);
 
   function handleSubmit(){
     Keyboard.dismiss();
+    var obj = listClients[index];
+    for(var index = 0, total =listClients.length; index < total; index++){
+
+      var obj = listClients[index];
+      
+      if(obj.phoneClient == phoneClient){
+        return alert('NÚMERO JÁ CADASTRADO, TENTE NOVAMENTE')
+      }
+      
+      }
     if (isNaN(phoneClient) || phoneClient.length < 11 ){
       alert('PREENCHA CORRETAMENTE')
       return;
@@ -34,16 +61,11 @@ export default function Home({data}) {
       alert('O nome precisa ter pelo menos 3 letras')
       return;
     }
-    // if ( nameClient !== String){
-    //   alert('Você não pode inserir números no campo de Nome do Cliente')
-    //   return;
-    // }
     if ( user.configurated == 'noConfigurated'){
       alert('Você precisa predefinir suas configurações antes de adicionar um cliente')
       navigation.navigate('ConfigsScreen')
       return;
     }
-    
     Alert.alert(
       'Confirme o TELEFONE',
       `Nome: ${nameClient}  Telefone: ${phoneClient}`,
@@ -59,6 +81,7 @@ export default function Home({data}) {
       ]
     )
   }
+
   async function handleSubmitClient(){
     setLoading(true);
     let uid = user.uid;
@@ -69,6 +92,7 @@ export default function Home({data}) {
       purchases: purchases,
       date: moment().format('DD/MM/YYYY')
     })
+    
     //AUTALIZAR QUANTIDADE DE CLIENTES AQUI
     let usuario = firebase.database().ref('users').child(uid);
     await usuario.once('value').then((snapshot)=>{
@@ -87,7 +111,6 @@ export default function Home({data}) {
           configurated:user.configurated,
           adminPass:user.adminPass
       }
-      
       storageUser(data);
     })
     loadStoragedUser();
@@ -99,7 +122,7 @@ export default function Home({data}) {
     alert('CLIENTE CADASTRADO COM SUCESSO');
   }
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}} style={{flex:1, backgroundColor:'red'}}>
+    <ScrollView contentContainerStyle={{flexGrow: 1}} style={{flex:1,}}>
       <View style={{flex:1}}>
       <Image source={require('../../Img/BackgroundApp.png')} 
               style={{width:'100%', height:'100%', position:"absolute"}}/>

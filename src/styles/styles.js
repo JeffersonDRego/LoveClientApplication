@@ -9,8 +9,8 @@ justify-content: center;
 /* align-items: center; */
 background-color: #FFA500;
 width: 100%;
-height: 95px;
-padding: 2px;
+height: 100px;
+padding: 5px;
 `
 //---------------------------------------------------LOGIN
 
