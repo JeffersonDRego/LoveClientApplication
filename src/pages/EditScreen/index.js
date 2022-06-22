@@ -45,6 +45,9 @@ export default function EditClient({route}) {
   //----------------------------------EDITANDO CLIENTE
   //EDITANDO NOME
   async function handleEditNameClient(){
+    if(newName.length<3){
+      return alert('O Nome precisa conter no mínimo 3 caracteres.')
+    }
     await firebase.database().ref('clients').child(uid).child(route.params.data.key).update({
       nameClient: newName
     })
@@ -118,7 +121,9 @@ export default function EditClient({route}) {
        setLoading(true)
        await firebase.database().ref('clients').child(uid).child(route.params.data.key).update({
          purchases: route.params.data.purchases + 1,
-         firstPurchase: today
+         firstPurchase: today,
+         lastPurchase: today
+
         })
         alert('CARIMBO CADASTRADO COM SUCESSO')
         setLoading(false)
@@ -129,7 +134,8 @@ export default function EditClient({route}) {
      }else{
        setLoading(true)
        await firebase.database().ref('clients').child(uid).child(route.params.data.key).update({
-         purchases: route.params.data.purchases + 1
+         purchases: route.params.data.purchases + 1,
+         lastPurchase: today
        })
        alert('CARIMBO CADASTRADO COM SUCESSO')
        setLoading(false)
@@ -144,7 +150,9 @@ export default function EditClient({route}) {
     setLoading(true)
     await firebase.database().ref('clients').child(uid).child(route.params.data.key).update({
       purchases: 0,
-      firstPurchase:'0 compras válidas'
+      firstPurchase:'0 compras válidas',
+      lastPurchase:'0 compras válidas'
+
     })
     navigation.navigate('ListScreen')
     setInfoPurchase('')
@@ -353,7 +361,7 @@ export default function EditClient({route}) {
           <Image source={require('../../Img/LogoBlackPNG.png')} 
                 style={{width:210, height:60, resizeMode:'contain', alignSelf:'flex-end'}}/>
         </ContainerHeader>
-        <View style={{height:3, backgroundColor:'#0D0D0D'}}></View>
+        <View style={{height:2, backgroundColor:'#0D0D0D'}}></View>
         {/* ------------------------BOTÃO VOLTAR----------------------- */}
         <TouchableOpacity style={{alignSelf:'flex-end',width:100, flexDirection:'row', alignItems:'center',justifyContent:'center', padding:6, marginTop:-40}} onPress={()=>navigation.navigate('ListScreen')}>
           <Text style={{fontFamily:'OxaniumSemiBold', color:'#2D2D2D', marginRight:3}}>VOLTAR</Text>
@@ -492,11 +500,11 @@ export default function EditClient({route}) {
               Linking.canOpenURL("whatsapp://send?text=oi").then(supported => {
                 if (supported) {
                   return Linking.openURL(
-                    `whatsapp://send?phone=55${data.phoneClient}&text=Olá ${route.params.data.nameClient}`
+                    `whatsapp://send?phone=55${route.params.data.phoneClient}&text=Olá ${route.params.data.nameClient}`
                     );
                   } else {
                     return Linking.openURL(
-                      `https://api.whatsapp.com/send?phone=55${data.phoneClient}&text=Olá ${route.params.data.nameClient}`
+                      `https://api.whatsapp.com/send?phone=55${route.params.data.phoneClient}&text=Olá ${route.params.data.nameClient}`
                       );
                     }
                   })
@@ -505,7 +513,18 @@ export default function EditClient({route}) {
               <IonIcons style={{}} name='logo-whatsapp' size={45} color={'green'}/>
             </TouchableOpacity>
             {/* ----------------------------------BARRA STATUS CARIMBOS CLIENTE--------------------------------- */}
+            
             <Text style={{fontSize:22, fontFamily:'OxaniumSemiBold', fontSize:27, margin:5}}>{route.params.data.nameClient}</Text>
+            <View style={{flexDirection:'row', justifyContent:'space-between',padding:1, borderBottomWidth:0.5}}>
+              <View style={{flexDirection:'row'}}>
+              <Text style={{fontFamily:'OxaniumSemiBold'}}> 1ª Compra:</Text>
+              <Text style={{fontFamily:'OxaniumLight'}}> {route.params.data.firstPurchase}</Text>
+              </View>
+              <View style={{flexDirection:'row'}}>
+              <Text style={{fontFamily:'OxaniumSemiBold'}}> Última Compra:</Text>
+              <Text style={{fontFamily:'OxaniumLight'}}> {route.params.data.lastPurchase}</Text>
+              </View>
+            </View>
             <View style={{flexDirection:'row', width:'100%', justifyContent:'space-between', padding:1,marginVertical:4}}>
             {
               user.numTotalCarimbos?

@@ -10,7 +10,7 @@ import {ContainerHeader, ContainerHome, TextInputs,} from '../../styles/styles';
 import MaskInput, {Masks} from 'react-native-mask-input';
 
 export default function Home({data}) {
-  
+
   const navigation = useNavigation();
   
   const {user, storageUser, loadStoragedUser,} = useContext(AuthContext);
@@ -130,7 +130,7 @@ export default function Home({data}) {
           <Image source={require('../../Img/LogoBlackPNG.png')} 
               style={{width:210, height:60, resizeMode:'contain', alignSelf:'flex-end'}}/>
         </ContainerHeader>
-        <View style={{height:3, backgroundColor:'#0D0D0D'}}></View>
+        <View style={{height:2, backgroundColor:'#0D0D0D'}}></View>
 
         <ContainerHome>
             <Text style={{fontSize:28, fontFamily: 'OxaniumBold', marginBottom:10, marginTop:30}}>Olá {user.name} Teste,</Text>

@@ -73,59 +73,6 @@ export default function ConfigsPageScreen() {
       setCriterionByVal(null)
     }
   }
-  //SALVANDO NO BANCO DE DADOS E NO ASYNCSTORAGE
-  function handleSetNoConfigurated(){
-    Alert.alert("Atenção", 'Ao redefinir as configurações, todos os clientes serão afetados. Os carimbos serão mantidos e adaptados às novas configurações',
-     [
-      {
-        text:'CANCELAR',
-        style: 'cancel'
-      },
-      {
-        text:'CONTINUAR',
-        onPress: ()=> handleForm()
-      }
-     ])
-  }
-  async function handleForm(){
-    
-    if(numTotalCarimbos == null || numTotalCarimbos == ''){
-      return alert('Preencha corretamente o campo de Quantidade de carimbos')
-    }
-    if(validadeCarimbos == null ){
-      return alert('Preencha corretamente o campo de Validade de carimbos')
-    }
-    if(valorMin.length <= 2 || valorMin == isNaN ){
-      return alert('O campo de valor mínimo está incorreto. (Mínimo 3 digitos). Ex.:R$ 1,00')
-    }
-    setLoading(true)
-    await new Promise(resolve=> setTimeout(resolve, 1000))
-    await firebase.database().ref('users').child(uid).set({
-      name: user.name,
-      clients: user.clients,
-      numTotalCarimbos:numTotalCarimbos,
-      validadeCarimbos:validadeCarimbos,
-      valorMin:valorMinimo,
-      adminPass:user.adminPass,
-      configurated:'configurated'
-    })
-    .then(()=>{
-      let data = {
-        uid: uid,
-        name: user.name,
-        email: user.email,
-        clients: user.clients,
-        numTotalCarimbos:numTotalCarimbos,
-        validadeCarimbos:validadeCarimbos,
-        valorMin:valorMinimo,
-        adminPass:user.adminPass,
-        configurated:'configurated'
-      }
-      storageUser(data)
-      loadStoragedUser()
-    })
-    setLoading(false)
-  }
   //RENDERIZAÇÃO POR NÚMERO DE COMPRAS 
   function ByNumConfig(){
     return(
@@ -149,7 +96,7 @@ export default function ConfigsPageScreen() {
         <View style={{width:'100%', borderStyle:'dashed', borderColor:'#AAA', borderWidth:1,  borderRadius:1, marginBottom:10}}>
         </View>
         <View>
-          <TextsLogin style={{fontWeight:'bold'}}>OS CARIMBOS TÊM PRAZO DE VALIDADE?</TextsLogin>
+          <TextsLogin style={{fontFamily:'OxaniumBold'}}>OS CARIMBOS TÊM PRAZO DE VALIDADE?</TextsLogin>
         </View>
         <View style={{flexDirection:'row', alignItems:'center',}}>
           <TextInputs
@@ -248,7 +195,7 @@ export default function ConfigsPageScreen() {
         </View>
         <View style={{flexDirection:'row', alignItems:'center'}}>
         <MaskInput
-          style={styles.InputInfoPurchase}
+          style={[styles.InputInfoPurchase,{color:valorMin.length===0||valorMin.length>=3?'#0D0D0D':'red'}]}
           value={valorMin}
           inputType="number"
           onChangeText={(text, rawValue)=>setValorMin(rawValue)}
@@ -259,7 +206,12 @@ export default function ConfigsPageScreen() {
           placeholder={'Ex: R$ 50,00'}
           // ref={inputInfo}
           />
-          {/* <TextsLogin>MESES</TextsLogin> */}
+        {/* <TextsLogin>MESES</TextsLogin> */}
+        {
+          valorMin.length<3?
+          <View style={{width:'55%'}}><Text style={{fontFamily:'OxaniumLight', color:'red'}}>MÍNIMO 3 DIGITOS</Text></View>
+          : <View/>
+        }
         </View>
         
         <TouchableOpacity 
@@ -277,8 +229,62 @@ export default function ConfigsPageScreen() {
       </View>
     )
   }
+  //SALVANDO NO BANCO DE DADOS E NO ASYNCSTORAGE
+  function handleSetNoConfigurated(){
+    Alert.alert("Atenção", 'Ao redefinir as configurações, todos os clientes serão afetados. Os carimbos serão mantidos e adaptados às novas configurações',
+     [
+      {
+        text:'CANCELAR',
+        style: 'cancel'
+      },
+      {
+        text:'CONTINUAR',
+        onPress: ()=> handleForm()
+      }
+     ])
+  }
+  async function handleForm(){
+    
+    if(numTotalCarimbos == null || numTotalCarimbos == ''){
+      return alert('Preencha corretamente o campo de Quantidade de carimbos')
+    }
+    if(validadeCarimbos == null ){
+      return alert('Preencha corretamente o campo de Validade de carimbos')
+    }
+    if(valorMin.length <= 2 || valorMin == isNaN ){
+      return alert('O campo de valor mínimo está incorreto. (Mínimo 3 digitos). Ex.:R$ 1,00')
+    }
+    setLoading(true)
+    await new Promise(resolve=> setTimeout(resolve, 1000))
+    await firebase.database().ref('users').child(uid).set({
+      name: user.name,
+      clients: user.clients,
+      numTotalCarimbos:numTotalCarimbos,
+      validadeCarimbos:validadeCarimbos,
+      valorMin:valorMinimo,
+      adminPass:user.adminPass,
+      configurated:'configurated'
+    })
+    .then(()=>{
+      let data = {
+        uid: uid,
+        name: user.name,
+        email: user.email,
+        clients: user.clients,
+        numTotalCarimbos:numTotalCarimbos,
+        validadeCarimbos:validadeCarimbos,
+        valorMin:valorMinimo,
+        adminPass:user.adminPass,
+        configurated:'configurated'
+      }
+      storageUser(data)
+      loadStoragedUser()
+    })
+    setLoading(false)
+  }
   //CHAMANDO NOVAS CONFIGS
   async function setNoConfigurated(){
+    setConfirmAdminPass('')
     if(user.adminPass!=='noPass'){
       return handleShowAdminPassInputNewConfigs()
     }
@@ -400,6 +406,7 @@ export default function ConfigsPageScreen() {
   //HANDLE SHOW INPUT ADMIN PASS'S
   function handleShowAdminPassInput(){
     setShowAdminPassNewConfigs('no')
+    setAdminPass('')
     showAdminPass=='no'? setShowAdminPass('yes'):setShowAdminPass('no')
   }
   function handleShowAdminPassInputNewConfigs(){
@@ -529,10 +536,10 @@ export default function ConfigsPageScreen() {
               <Image source={require('../../Img/LogoBlackPNG.png')} 
               style={{width:210, height:60, resizeMode:'contain', alignSelf:'flex-end'}}/>
             </ContainerHeader>
-            <View style={{height:3, backgroundColor:'#0D0D0D'}}></View>
+            <View style={{height:2, backgroundColor:'#0D0D0D'}}></View>
             {/* ---------------------------BOTÃO SAIR------------------------------ */}
             <TouchableOpacity onPress={()=>{handleLogout()}}
-            style={{elevation:5, alignSelf:'flex-end', marginTop:-30, marginRight:7, paddingHorizontal:8,paddingVertical:3,borderRadius:5, backgroundColor:'red'}}>
+            style={{elevation:5, alignSelf:'flex-end', marginTop:-30, marginRight:7, paddingHorizontal:8,paddingVertical:3,borderRadius:3, backgroundColor:'red'}}>
               <Text style={{fontFamily:'OxaniumSemiBold', color:'#FFF', fontSize:12}}>SAIR</Text>
             </TouchableOpacity>
 
@@ -631,7 +638,7 @@ export default function ConfigsPageScreen() {
           <Image source={require('../../Img/LogoBlackPNG.png')} 
           style={{width:210, height:60, resizeMode:'contain', alignSelf:'flex-end'}}/>
         </ContainerHeader>
-        <View style={{height:3, backgroundColor:'#0D0D0D'}}></View>
+        <View style={{height:2, backgroundColor:'#0D0D0D'}}></View>
 
         <ContainerConfigsScreen>
           <View>
@@ -677,7 +684,7 @@ export default function ConfigsPageScreen() {
 }
 const styles = StyleSheet.create({
   InputInfoPurchase:{
-    width: 150,
+    width: '35%',
     // height: 35,
     // backgroundColor:'#DCDCDC',
     // borderRadius:5,

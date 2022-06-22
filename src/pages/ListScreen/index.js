@@ -36,7 +36,8 @@ export default function ListPageScreen(props) {
             nameClient: childItem.val().nameClient,
             phoneClient: childItem.val().phoneClient,
             purchases: childItem.val().purchases,
-            firstPurchase: childItem.val().firstPurchase
+            firstPurchase: childItem.val().firstPurchase,
+            lastPurchase: childItem.val().lastPurchase
           };
           setListClients(oldArray => [...oldArray, list].reverse());
         });
@@ -103,7 +104,7 @@ export default function ListPageScreen(props) {
         <Image source={require('../../Img/LogoBlackPNG.png')} 
                 style={{width:210, height:60, resizeMode:'contain', alignSelf:'flex-end'}}/>
       </ContainerHeader>
-      <View style={{height:3, backgroundColor:'#0D0D0D'}}></View>
+      <View style={{height:2, backgroundColor:'#0D0D0D'}}></View>
 
       {/* <View style={{width:'100%', height:7, backgroundColor:'#BFB47A'}}> */}
       {/* </View> */}

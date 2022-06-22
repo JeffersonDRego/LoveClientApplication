@@ -65,7 +65,7 @@ export default function Warning({data}) {
         <Image source={require('../../Img/LogoBlackPNG.png')} 
               style={{width:210, height:60, resizeMode:'contain', alignSelf:'flex-end'}}/>
         </ContainerHeader>
-        <View style={{height:3, backgroundColor:'#0D0D0D'}}></View>
+        <View style={{height:2, backgroundColor:'#0D0D0D'}}></View>
 
         <View style={{padding:20, paddingTop:35 }}>
 
